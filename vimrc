@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+set mouse=a
+set clipboard=unnamed
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -16,12 +19,16 @@ Bundle 'tpope/vim-repeat'
 Bundle 'kien/ctrlp.vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'sjl/gundo.vim'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'wincent/Command-T'
 Bundle 'Lokaltog/vim-distinguished'
-Bundle 'kevinw/pyflakes-vim'
+Bundle 'bling/vim-airline'
+Bundle 'scrooloose/nerdtree'
+Bundle 'majutsushi/tagbar'
+Bundle 'fatih/vim-go'
+Bundle 'Shougo/neocomplete'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -59,6 +66,9 @@ set vb t_vb=
 "autocmd FileType * setlocal colorcolumn=0
 
 """ Moving Around/Editing
+autocmd VimEnter * Tagbar
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
 set cursorline              " have a line indicate the cursor location
 set ruler                   " show the cursor position all the time
 set nostartofline           " Avoid moving cursor to BOL when jumping around
@@ -101,13 +111,46 @@ set smartcase               " unless uppercase letters are used in the regex.
 set hlsearch                " Highlight searches by default.
 set incsearch               " Incrementally search while typing a /regex
 
+
 """ Set color scheme
 let g:distinguished_visibility = "high"
 let g:distinguished_contrast = "high"
 let g:distinguished_termcolors=256
 colorscheme distinguished
 "let g:solarized_visibility = "high"
-"let g:solarized_contrast = "high"
+""let g:solarized_contrast = "high"
 "let g:solarized_termcolors=256
-"colorscheme solarized
+""colorscheme solarized
 set background=dark
+
+let NERDTreeQuitOnOpen = 1
+map <silent> <C-n> :NERDTreeToggle<CR>
+let g:neocomplete#enable_at_startup = 1
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
