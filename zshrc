@@ -14,4 +14,6 @@ fi
 export PATH=$PATH:/Users/mstone/Dropbox/Dev/go/bin
 export PATH="$PATH:/Users/mstone/Dropbox/Dev/arcanist/bin"
 export GOPATH=/Users/mstone/Dropbox/Dev/go
-#alias vi=vim
+
+# Load aliases
+source $HOME/.aliases
