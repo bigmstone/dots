@@ -126,6 +126,8 @@ set background=dark
 let NERDTreeQuitOnOpen = 1
 map <silent> <C-n> :NERDTreeToggle<CR>
 let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_cursor_hold_i = 1
+let g:neocomplete#cursor_hold_i_time = 1000 " in msec
 
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
