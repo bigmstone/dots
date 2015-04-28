@@ -14,6 +14,10 @@ fi
 export PATH=$PATH:/Users/mstone/Dropbox/Dev/go/bin
 export PATH="$PATH:/Users/mstone/Dropbox/Dev/arcanist/bin"
 export GOPATH=/Users/mstone/Dropbox/Dev/go
+export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # Load aliases
 source $HOME/.aliases
+autoload -Uz promptinit
+promptinit
+prompt steeef

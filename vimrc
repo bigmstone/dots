@@ -4,6 +4,7 @@ filetype off                  " required
 set mouse=a
 set clipboard=unnamed
 
+source ~/.vim/yang.vim
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -29,6 +30,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'fatih/vim-go'
 Bundle 'Shougo/neocomplete'
+Bundle 'davidhalter/jedi-vim'
+Bundle 'rust-lang/rust.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -125,9 +128,20 @@ set background=dark
 
 let NERDTreeQuitOnOpen = 1
 map <silent> <C-n> :NERDTreeToggle<CR>
+
+
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+autocmd FileType python setlocal omnifunc=jedi#completions
+if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_cursor_hold_i = 1
-let g:neocomplete#cursor_hold_i_time = 1000 " in msec
+let g:neocomplete#cursor_hold_i_time = 500 " in msec
+
 
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -156,3 +170,5 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
+
+hi Normal ctermbg=none

@@ -1,5 +1,5 @@
 # Quickly change to dev directory
-alias dev="cd ~/Dropbox/Dev"
+# alias dev="cd ~/Dropbox/Dev"
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
@@ -25,3 +25,22 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 # Speed Test
 alias speedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null` / 131072" | bc | xargs -I {} echo {} mbps'
+
+# VI to VIM
+alias vi='vim'
+
+alias pypiup='python setup.py sdist upload'
+
+
+alias tmux='TERM=xterm-256color tmux'
+
+workin () { cd "$HOME/Dropbox/dev/$@"; }
+mkdev () {  mkdir "$HOME/Dropbox/dev/$@"; workin "$@"; }
+
+gic () { echo "Making dev directory: $2";
+         mkdev $2;
+         cd "$HOME/Dropbox/dev/$2";
+         git init;
+         git remote add origin $1;
+         git fetch;
+         git checkout -t origin/master }
