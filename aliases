@@ -35,6 +35,7 @@ alias pypiup='python setup.py sdist upload'
 alias tmux='TERM=xterm-256color tmux'
 
 workin () { cd "$HOME/Dropbox/dev/$@"; }
+lsdev () { ls ~/Dropbox/Dev; }
 mkdev () {  mkdir "$HOME/Dropbox/dev/$@"; workin "$@"; }
 
 gic () { echo "Making dev directory: $2";
@@ -44,3 +45,7 @@ gic () { echo "Making dev directory: $2";
          git remote add origin $1;
          git fetch;
          git checkout -t origin/master }
+
+ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat >> ~/.ssh/authorized_keys' }
+
+alias catmd="pandoc -f markdown -t plain"
