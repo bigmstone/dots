@@ -49,3 +49,11 @@ gic () { echo "Making dev directory: $2";
 ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat >> ~/.ssh/authorized_keys' }
 
 alias catmd="pandoc -f markdown -t plain"
+
+work-dev () {
+    cd "$HOME/Dropbox/dev/$1";
+    tmux new-session -d
+    tmux split-window -v
+    tmux resize-pane -D 15
+    tmux -2 attach-session -d 
+    }
