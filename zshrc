@@ -21,4 +21,4 @@ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 source $HOME/.aliases
 autoload -Uz promptinit
 promptinit
-prompt steeef
+prompt sorin
