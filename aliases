@@ -57,3 +57,20 @@ work-dev () {
     tmux resize-pane -D 15
     tmux -2 attach-session -d 
     }
+
+venv () {
+    SDIR=`pwd`
+    while true; do
+            if [ -d env ]; then
+                echo "Sourcing env."
+                source "env/bin/activate"
+                break
+            fi
+            cd ../
+            if [[ "$PWD" == "/" ]]; then
+                echo "No virtual environments found."
+                break
+            fi
+        done
+    cd $SDIR
+}
