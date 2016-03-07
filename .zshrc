@@ -11,14 +11,14 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-export PATH=$PATH:/Users/mstone/Dropbox/Dev/go/bin
-export PATH="$PATH:/Users/mstone/Dropbox/Dev/arcanist/bin"
-export PATH="$PATH:/Users/mstone/Dropbox/Dev/bin"
-export GOPATH=/Users/mstone/Dropbox/Dev/go
+export PATH=$PATH:/usr/local/go/bin
+export PATH="$PATH:~/Dropbox/Dev/arcanist/bin"
+export PATH="$PATH:~/Dropbox/Dev/bin"
+export GOPATH=~/Dreopbox/Dev/go
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # Load aliases
 source $HOME/.aliases
 autoload -Uz promptinit
 promptinit
-prompt sorin
+prompt paradox

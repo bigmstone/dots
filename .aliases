@@ -4,6 +4,9 @@
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
+# Weather
+alias weather='curl wttr.in'
+
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'
 
@@ -27,7 +30,7 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias speedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null` / 131072" | bc | xargs -I {} echo {} mbps'
 
 # VI to VIM
-alias vi='vim'
+
 
 alias pypiup='python setup.py sdist upload'
 
@@ -35,7 +38,7 @@ alias pypiup='python setup.py sdist upload'
 alias tmux='TERM=xterm-256color tmux'
 
 workin () { cd "$HOME/Dropbox/dev/$@"; }
-lsdev () { ls ~/Dropbox/Dev; }
+lsdev () { ls $HOME/Dropbox/dev; }
 mkdev () {  mkdir "$HOME/Dropbox/dev/$@"; workin "$@"; }
 
 gic () { echo "Making dev directory: $2";
@@ -74,3 +77,5 @@ venv () {
         done
     cd $SDIR
 }
+
+alias t='$HOME/Dropbox/dev/todo.txt-cli/todo.sh'
