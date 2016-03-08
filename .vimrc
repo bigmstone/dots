@@ -90,9 +90,9 @@ set softtabstop=4           " <BS> over an autoindent deletes all spaces.
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 set shiftround              " rounds indent to a multiple of shiftwidth
 set formatoptions=tcroql    " Setting text and comment formatting to auto
-set textwidth=80            " lines are automatically wrapped after 80 columns
+set textwidth=79            " lines are automatically wrapped after 80 columns
 set nofoldenable            " turn off folding
-set colorcolumn=80          " highlight column 80 (where words will wrap)
+set colorcolumn=79          " highlight column 80 (where words will wrap)
 
 """" Reading/Writing
 set autowriteall            " Don't bother me about changed buffers
@@ -120,7 +120,7 @@ set incsearch               " Incrementally search while typing a /regex
 let g:distinguished_visibility = "high"
 let g:distinguished_contrast = "high"
 let g:distinguished_termcolors=256
-colorscheme distinguished
+colorscheme solarized
 "let g:solarized_visibility = "high"
 ""let g:solarized_contrast = "high"
 "let g:solarized_termcolors=256
