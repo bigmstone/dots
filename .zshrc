@@ -19,6 +19,7 @@ export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # Load aliases
 source $HOME/.aliases
+source $HOME/.prienv
 autoload -Uz promptinit
 promptinit
 prompt paradox
