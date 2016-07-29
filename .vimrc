@@ -20,7 +20,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'kien/ctrlp.vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'sjl/gundo.vim'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/syntastic'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'wincent/Command-T'
@@ -29,14 +29,23 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
 Bundle 'fatih/vim-go'
-"Bundle 'Shougo/neocomplete'
+Bundle 'Shougo/neocomplete'
 Bundle 'jmcantrell/vim-virtualenv'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'rust-lang/rust.vim'
+Bundle 'golang/lint'
+Bundle 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -128,7 +137,7 @@ colorscheme solarized
 set background=dark
 
 let NERDTreeQuitOnOpen = 1
-map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <C-n> :NERDTreeToggl<CR>
 
 
 let g:jedi#completions_enabled = 0

@@ -1,5 +1,5 @@
 # Quickly change to dev directory
-# alias dev="cd ~/Dropbox/Dev"
+# alias dev="cd ~/Dropbox/dev"
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
@@ -39,6 +39,7 @@ alias pypiup='python setup.py sdist upload'
 alias tmux='TERM=xterm-256color tmux'
 
 workin () { cd "$HOME/Dropbox/dev/$@"; }
+workgo () { cd "$HOME/Dropbox/dev/go/src/$@"; }
 lsdev () { ls $HOME/Dropbox/dev; }
 mkdev () {  mkdir "$HOME/Dropbox/dev/$@"; workin "$@"; }
 
@@ -54,20 +55,27 @@ ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat > .tmp.pubkey; mkdir ~
 
 alias catmd="pandoc -f markdown -t plain"
 
-work-dev () {
-    cd "$HOME/Dropbox/dev/$1";
-    tmux new-session -d
-    tmux split-window -v
-    tmux resize-pane -D 15
-    tmux -2 attach-session -d 
+workdev () {
+    if [ -Z "$@" ]; then
+        tmux new-session -d
+        tmux split-window -v
+        tmux resize-pane -D 15
+        tmux -2 attach-session -d
+    else
+        cd "$HOME/Dropbox/dev/$1";
+        tmux new-session -d
+        tmux split-window -v
+        tmux resize-pane -D 15
+        tmux -2 attach-session -d
+    fi
     }
 
 venv () {
     SDIR=`pwd`
     while true; do
-            if [ -d env ]; then
+            if [ -d .venv ]; then
                 echo "Sourcing env."
-                source "env/bin/activate"
+                source ".venv/bin/activate"
                 break
             fi
             cd ../
