@@ -1,5 +1,6 @@
 # Quickly change to dev directory
 # alias dev="cd ~/Dropbox/dev"
+DEV=$HOME/dev
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
@@ -24,13 +25,14 @@ alias spotoff="sudo mdutil -a -i off"
 alias spoton="sudo mdutil -a -i on"
 
 # Lock the screen (when going AFK)
-alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+alias afk="gnome-screensaver-command -l"
+# alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Speed Test
 alias speedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null` / 131072" | bc | xargs -I {} echo {} mbps'
 
 # VI to VIM
-alias vi='vim'
+alias vi='vimx'
 
 
 alias pypiup='python setup.py sdist upload'
@@ -38,20 +40,20 @@ alias pypiup='python setup.py sdist upload'
 
 alias tmux='TERM=xterm-256color tmux'
 
-workin () { cd "$HOME/Dropbox/dev/$@"; }
-workgo () { cd "$HOME/Dropbox/dev/go/src/$@"; }
-lsdev () { ls $HOME/Dropbox/dev; }
-mkdev () {  mkdir "$HOME/Dropbox/dev/$@"; workin "$@"; }
+workin () { cd "$DEV/$@"; }
+workgo () { cd "$DEV/go/src/$@"; }
+lsdev () { ls $DEV; }
+mkdev () {  mkdir "$DEV/$@"; workin "$@"; }
 
 gic () { echo "Making dev directory: $2";
          mkdev $2;
-         cd "$HOME/Dropbox/dev/$2";
+         cd "$DEV/$2";
          git init;
          git remote add origin $1;
          git fetch;
          git checkout -t origin/master }
 
-ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat > .tmp.pubkey; mkdir ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' }
+ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat > .tmp.pubkey; mkdir -p ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' }
 
 alias catmd="pandoc -f markdown -t plain"
 
@@ -62,7 +64,7 @@ workdev () {
         tmux resize-pane -D 15
         tmux -2 attach-session -d
     else
-        cd "$HOME/Dropbox/dev/$1";
+        cd "$DEV/$1";
         tmux new-session -d
         tmux split-window -v
         tmux resize-pane -D 15
@@ -74,8 +76,13 @@ venv () {
     SDIR=`pwd`
     while true; do
             if [ -d .venv ]; then
-                echo "Sourcing env."
+                echo "Sourcing env from $PWD/.venv"
                 source ".venv/bin/activate"
+                break
+            fi
+            if [ -d virtualenv ]; then
+                echo "Sourcing env from $PWD/virtualenv"
+                source "virtualenv/bin/activate"
                 break
             fi
             cd ../
@@ -87,4 +94,20 @@ venv () {
     cd $SDIR
 }
 
-alias t='$HOME/Dropbox/dev/todo.txt-cli/todo.sh'
+synk () {
+    # I built this and then found out about vagrant rsync. I leave it here so
+    # you can admire my understanding of regex and sed.
+    #
+    #
+    # VAGRANT_SSH_CONFIG=$(vagrant ssh-config)
+    # VAGRANT_IP=$(echo $VAGRANT_SSH_CONFIG | sed -rn 's/\s*HostName\s*([0-9.a-Z]+)/\1/p')
+    # VAGRANT_PORT=$(echo $VAGRANT_SSH_CONFIG | sed -rn 's/\s*Port\s*([0-9]+)/\1/p')
+    # FOLDERS=$(cat Vagrantfile | grep synced_folder | grep -v -e "#" | sed -r 's/\s*config.vm.synced_folder\s*"([~/a-Z0-9_-.]*)",\s*"([!/a-Z0-9_-.]*)".*/\1 \2/g')
+    # while read -A entry; do
+    #     echo "rsync -rvh ${entry[1]} vagrant@$VAGRANT_IP:${entry[2]} --delete --links --port=$VAGRANT_PORT"
+    #     rsync -rvh ${entry[1]} vagrant@$VAGRANT_IP:${entry[2]} --delete --links -e "ssh -p $VAGRANT_PORT"
+    # done <<< $FOLDERS
+    vagrant rsync
+}
+
+alias t='$DEV/todo.txt-cli/todo.sh'
