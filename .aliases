@@ -31,10 +31,6 @@ alias afk="gnome-screensaver-command -l"
 # Speed Test
 alias speedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null` / 131072" | bc | xargs -I {} echo {} mbps'
 
-# VI to VIM
-alias vi='vimx'
-
-
 alias pypiup='python setup.py sdist upload'
 
 
@@ -111,3 +107,13 @@ synk () {
 }
 
 alias t='$DEV/todo.txt-cli/todo.sh'
+
+genpw () {
+    if [ -z $1 ]; then
+        len=32;
+    else
+        len=$1
+    fi
+    
+    date +%s | sha256sum | base64 | head -c $len; echo
+}

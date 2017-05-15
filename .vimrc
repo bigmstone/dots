@@ -32,6 +32,8 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'rust-lang/rust.vim'
 Bundle 'Yggdroot/indentLine'
+Bundle 'mxw/vim-jsx'
+Bundle 'chase/vim-ansible-yaml'
 
 call vundle#end()
 
@@ -47,6 +49,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_go_checkers = ['gometalinter']
+let g:syntastic_javascript_checkers = ['eslint']
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
 
@@ -149,3 +152,10 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2

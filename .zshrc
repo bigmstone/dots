@@ -26,4 +26,4 @@ source $HOME/.aliases
 source $HOME/.prienv
 autoload -Uz promptinit
 promptinit
-prompt sorin
+prompt steeef

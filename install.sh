@@ -2,21 +2,45 @@
 read -q "ignore?Make sure ZSH is installed and all requirements are satisfied."
 dotswd=`pwd`
 echo $dotswd
-sudo dnf install util-linux-user vim gvim ctags golang git tmux
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
+function install_osx {
+    echo "Not supported yet. Lame"
+}
+
+function install_linux {
+  echo "Installing on linux."
+  distro=`lsb_release -si`
+
+  echo $distro
+
+  case "$distro" in
+    LinuxMint) install_apt ;;
+    Ubuntu)    install_apt ;;
+    Fedora)    install_dnf ;;
+    *)          echo "Unsupported Distro" ;;
+  esac
+}
+
+function install_apt {
+  echo "Installing with APT"
+  sudo apt-get -y install vim ctags golang git tmux cmake
+}
+
+function install_dnf {
+  echo "Installing with DNF"
+  sudo dnf install util-linux-user vim gvim ctags golang git tmux cmake
+}
+
 case "$OSTYPE" in
-    solaris*) echo "SOLARIS" ;;
-    darwin*)  echo "OSX" ;; 
-    linux*)   echo "LINUX" ;;
-    bsd*)     echo "BSD" ;;
-    msys*)    echo "WINDOWS" ;;
-    *)        echo "unknown: $OSTYPE" ;;
+  darwin*) install_osx ;; 
+  linux*)  install_linux ;;
+  *)       echo "Unsupported OS" ;;
 esac
 
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-      ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 ln -sf $dotswd/.aliases ~/
