@@ -1,6 +1,6 @@
 # Quickly change to dev directory
 # alias dev="cd ~/Dropbox/dev"
-DEV=$HOME/dev
+DEV=$HOME/dropbox/dev
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
@@ -56,17 +56,18 @@ alias catmd="pandoc -f markdown -t plain"
 workdev () {
     if [ -Z "$@" ]; then
         tmux new-session -d
-        tmux split-window -v
-        tmux resize-pane -D 15
-        tmux -2 attach-session -d
     else
         cd "$DEV/$1";
-        tmux new-session -d
-        tmux split-window -v
-        tmux resize-pane -D 15
-        tmux -2 attach-session -d
+        tmux new-session -d -s "$1"
     fi
-    }
+    tmux rename-window "Dev"
+    tmux new-window -n "Test"
+    tmux split-window -v
+    tmux select-window -n
+    tmux -2 attach-session -d
+}
+
+alias vi=vim
 
 venv () {
     SDIR=`pwd`
@@ -88,6 +89,7 @@ venv () {
             fi
         done
     cd $SDIR
+    unset $SDIR
 }
 
 synk () {

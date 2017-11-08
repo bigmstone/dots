@@ -5,7 +5,7 @@ echo $dotswd
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
 function install_osx {
-    echo "Not supported yet. Lame"
+  brew install vim ctags golang git tmux reattach-to-user-namespace
 }
 
 function install_linux {

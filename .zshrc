@@ -12,13 +12,13 @@ fi
 
 # Customize to your needs...
 export PATH=$PATH:/usr/local/go/bin
-export PATH="$PATH:$HOME/dev/arcanist/bin"
-export PATH="$PATH:$HOME/dev/bin"
-export PATH="$PATH:$HOME/dev/go/bin"
-export GOPATH=$HOME/dev/go
+export PATH="$PATH:$HOME/Dropbox/dev/arcanist/bin"
+export PATH="$PATH:$HOME/Dropbox/dev/bin"
+export PATH="$PATH:$HOME/Dropbox/dev/go/bin"
+export GOPATH=$HOME/Dropbox/dev/go
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
-export VISUAL=vimx
-export EDITOR=vimx
+export VISUAL=vim
+export EDITOR=vim
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # Load aliases
