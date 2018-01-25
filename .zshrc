@@ -12,10 +12,10 @@ fi
 
 # Customize to your needs...
 export PATH=$PATH:/usr/local/go/bin
-export PATH="$PATH:$HOME/Dropbox/dev/arcanist/bin"
-export PATH="$PATH:$HOME/Dropbox/dev/bin"
-export PATH="$PATH:$HOME/Dropbox/dev/go/bin"
-export GOPATH=$HOME/Dropbox/dev/go
+export PATH="$PATH:$HOME/dev/arcanist/bin"
+export PATH="$PATH:$HOME/dev/bin"
+export PATH="$PATH:$HOME/dev/go/bin"
+export GOPATH=$HOME/dev/go
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VISUAL=vim
 export EDITOR=vim
@@ -27,3 +27,5 @@ source $HOME/.prienv
 autoload -Uz promptinit
 promptinit
 prompt steeef
+
+export PATH=~/Library/Python/3.6/bin:$PATH

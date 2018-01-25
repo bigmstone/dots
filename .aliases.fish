@@ -1,9 +1,9 @@
 # Quickly change to dev directory
-# alias dev="cd ~/Dropbox/dev"
-DEV=$HOME/dev
+# alias dev="cd ~/dev"
+set DEV $HOME/dev
 
 # Stopwatch
-alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+alias timer='echo "Timer started. Stop with Ctrl-D."; and date; and time cat; and date'
 
 # Weather
 alias weather='curl wttr.in'
@@ -14,7 +14,7 @@ alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup
 # IP addresses
 alias exip="curl myipv4.millnert.se"
 alias localip="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)  3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print}'"
 
 # View HTTP traffic
 alias sniff="sudo ngrep -d 'wlp4s0' -t '^(GET|POST) ' 'tcp and port 80'"
@@ -29,70 +29,96 @@ alias afk="gnome-screensaver-command -l"
 # alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
 # Speed Test
-alias speedtest='echo "scale=2; `curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null` / 131072" | bc | xargs -I {} echo {} mbps'
+alias speedtest='echo "scale=2; (curl  --progress-bar -w "%{speed_download}" http://speedtest.wdc01.softlayer.com/downloads/test10.zip -o /dev/null) / 131072" | bc | xargs -I  {} echo  {} mbps'
 
 alias pypiup='python setup.py sdist upload'
 
 
-alias tmux='TERM=xterm-256color tmux'
+function tmux
+    set TERM xterm-256color
+    command tmux $argv
+end
 
-workin () { cd "$DEV/$@"; }
-workgo () { cd "$DEV/go/src/$@"; }
-lsdev () { ls $DEV; }
-mkdev () {  mkdir "$DEV/$@"; workin "$@"; }
+function workin
+    cd "$DEV/$argv"
+end
+function workgo
+    cd "$DEV/go/src/$argv"
+end
+function lsdev
+    ls $DEV
+end
+function mkdev
+    mkdir "$DEV/$argv"
+    workin "$argv"
+end
 
-gic () { echo "Making dev directory: $2";
-         mkdev $2;
-         cd "$DEV/$2";
-         git init;
-         git remote add origin $1;
-         git fetch;
-         git checkout -t origin/master }
+function gic
+    echo "Making dev directory: $2";
+    mkdev $2;
+    cd "$DEV/$2";
+    git init;
+    git remote add origin $1;
+    git fetch;
+    git checkout -t origin/master
+end
 
-ssh-remote-add () { cat ~/.ssh/id_rsa.pub | ssh "$@" 'cat > .tmp.pubkey; mkdir -p ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' }
+function ssh-remote-add
+    cat ~/.ssh/id_rsa.pub | ssh "$argv" 'cat > .tmp.pubkey; mkdir -p ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' 
+end
 
 alias catmd="pandoc -f markdown -t plain"
 
-workdev () {
-    if [ -z "$@" ]; then
+function workdev  
+    if [ -z "$argv[1]" ]
+        echo "No session specified, starting in main dev"
+        cd "$DEV"
         tmux new-session -d
     else
-        cd "$DEV/$1";
-        tmux new-session -d -s "$1"
-    fi
+        if [ -d "$DEV/$argv[1]" ]
+            echo "Starting in $argv[1]"
+            cd "$DEV/$argv[1]"
+            set sessionName (echo $argv[1] | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')
+            echo "Session name: $sessionName"
+            tmux new-session -d -s "$sessionName"
+        else
+            echo "Well, that dir don't exist."
+            return
+        end
+    end
     tmux rename-window "Dev"
     tmux new-window -n "Test"
     tmux split-window -v
     tmux select-window -n
     tmux -2 attach-session -d
-}
+end
 
 alias vi=vim
 
-venv () {
-    SDIR=`pwd`
-    while true; do
-            if [ -d .venv ]; then
-                echo "Sourcing env from $PWD/.venv"
-                source ".venv/bin/activate"
-                break
-            fi
-            if [ -d virtualenv ]; then
-                echo "Sourcing env from $PWD/virtualenv"
-                source "virtualenv/bin/activate"
-                break
-            fi
-            cd ../
-            if [[ "$PWD" == "/" ]]; then
-                echo "No virtual environments found."
-                break
-            fi
-        done
+function venv  
+    set SDIR (pwd)
+    while true
+        if [ -d .venv ]
+            echo "Sourcing env from (pwd)/.venv"
+            source ".venv/bin/activate.fish"
+            break
+        end
+        if [ -d virtualenv ]
+            echo "Sourcing env from (pwd)/virtualenv"
+            source "virtualenv/bin/activate.fish"
+            break
+        end
+        cd ../
+        if [ (PWD) = "/" ]
+            echo "No virtual environments found."
+            break
+        end
+    end
     cd $SDIR
-    unset SDIR
-}
+    set -e SDIR
+end
 
-synk () {
+function synk  
     # I built this and then found out about vagrant rsync. I leave it here so
     # you can admire my understanding of regex and sed.
     #
@@ -106,21 +132,21 @@ synk () {
     #     rsync -rvh ${entry[1]} vagrant@$VAGRANT_IP:${entry[2]} --delete --links -e "ssh -p $VAGRANT_PORT"
     # done <<< $FOLDERS
     vagrant rsync
-}
+end
 
 alias t='$DEV/todo.txt-cli/todo.sh'
 
-genpw () {
-    if [ -z $1 ]; then
+function genpw 
+    if [ -z $1 ]
         len=32;
     else
         len=$1
-    fi
+    end
     
     date +%s | sha256sum | base64 | head -c $len; echo
-}
+end
 
-today () {
+function today
     echo "\
 ___________________________ _______  _______ 
 \\__   __/\\__   __/\\__   __/(  ___  )(  ____ \\
@@ -149,4 +175,4 @@ ___) (___   | |   ___) (___| (___) || )
         \
     "
     weather
-}
+end

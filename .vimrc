@@ -1,10 +1,10 @@
 set nocompatible
 filetype off
 
+set shell=/bin/bash
+
 set mouse=a
 set clipboard=unnamed
-
-source ~/.vim/yang.vim
 
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -22,6 +22,8 @@ Bundle 'Valloric/YouCompleteMe'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'w0rp/ale'
 Bundle 'altercation/vim-colors-solarized'
+"Bundle 'jnurmine/Zenburn'
+"Bundle 'danilo-augusto/vim-afterglow'
 Bundle 'wincent/Command-T'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'bling/vim-airline'
@@ -157,6 +159,7 @@ endif
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 
+autocmd FileType tf setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yml setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -165,3 +168,5 @@ autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
 set spell
 set spelllang=en_us
+
+autocmd filetype crontab setlocal nobackup nowritebackup
