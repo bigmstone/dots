@@ -58,7 +58,7 @@ workdev () {
         tmux new-session -d
     else
         cd "$DEV/$1";
-        tmux new-session -d -s "$1"
+        tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
     fi
     tmux rename-window "Dev"
     tmux new-window -n "Test"

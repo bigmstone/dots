@@ -4,6 +4,7 @@ filetype off
 set shell=/bin/bash
 
 set mouse=a
+set ttymouse=sgr
 set clipboard=unnamed
 
 
@@ -21,6 +22,7 @@ Bundle 'sjl/gundo.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'w0rp/ale'
+Bundle 'wincent/command-t'
 Bundle 'altercation/vim-colors-solarized'
 "Bundle 'jnurmine/Zenburn'
 "Bundle 'danilo-augusto/vim-afterglow'
