@@ -7,11 +7,11 @@ set mouse=a
 set ttymouse=sgr
 set clipboard=unnamed
 
+set conceallevel=0
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-
 
 Bundle 'tpope/vim-fugitive'
 Bundle 'tomasr/molokai'
@@ -19,17 +19,22 @@ Bundle 'tpope/vim-repeat'
 Bundle 'kien/ctrlp.vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'sjl/gundo.vim'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
+Bundle 'maralla/completor.vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'w0rp/ale'
 Bundle 'wincent/command-t'
 Bundle 'altercation/vim-colors-solarized'
 "Bundle 'jnurmine/Zenburn'
-"Bundle 'danilo-augusto/vim-afterglow'
+Bundle 'tpope/vim-surround'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'danilo-augusto/vim-afterglow'
 Bundle 'wincent/Command-T'
 Bundle 'Lokaltog/vim-distinguished'
+Bundle 'fenetikm/falcon'
 Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
+Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'majutsushi/tagbar'
 Bundle 'fatih/vim-go'
 Bundle 'jmcantrell/vim-virtualenv'
@@ -40,9 +45,13 @@ Bundle 'Yggdroot/indentLine'
 Bundle 'mxw/vim-jsx'
 Bundle 'chase/vim-ansible-yaml'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+Bundle 'tpope/vim-dadbod'
 
 call vundle#end()
 
+let g:virtualenv_directory = '.'
 
 filetype plugin indent on
 
@@ -57,7 +66,7 @@ set statusline+=%*
 "let g:syntastic_go_checkers = ['gometalinter']
 "let g:syntastic_javascript_checkers = ['eslint']
 
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'rg --vimgrep'
 
 syntax on
 filetype on
@@ -84,7 +93,7 @@ set backspace=2
 set showmatch
 "set wrap
 "set textwidth=79
-set colorcolumn=79
+set colorcolumn=80
 set linebreak
 set autoindent
 set smartindent
@@ -111,13 +120,18 @@ set hlsearch
 set incsearch
 
 
-colorscheme solarized
+"colorscheme distinguished
+"colorscheme solarized
+"colorscheme afterglow
+colorscheme falcon
+
+hi Normal ctermbg=none
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
+
 
 let NERDTreeQuitOnOpen = 1
 map <silent> <C-n> :NERDTreeToggl<CR>
-
-
-autocmd FileType python setlocal omnifunc=jedi#completions
 
 
 let g:tagbar_type_go = {
@@ -148,8 +162,6 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 
-hi Normal ctermbg=none
-
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
     execute "set <xUp>=\e[1;*A"
@@ -166,9 +178,16 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript setlocal colorcolumn=100
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType python setlocal omnifunc=jedi#completions
+autocmd FileType python setlocal colorcolumn=80
+autocmd FileType go setlocal colorcolumn=100
 
 set spell
 set spelllang=en_us
+
+hi clear SpellBad
+hi SpellBad cterm=underline
 
 autocmd filetype crontab setlocal nobackup nowritebackup

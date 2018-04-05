@@ -72,6 +72,11 @@ alias vi=vim
 venv () {
     SDIR=`pwd`
     while true; do
+            if [ -d venv ]; then
+                echo "Sourcing env from $PWD/.venv"
+                source "venv/bin/activate"
+                break
+            fi
             if [ -d .venv ]; then
                 echo "Sourcing env from $PWD/.venv"
                 source ".venv/bin/activate"
@@ -149,4 +154,9 @@ ___) (___   | |   ___) (___| (___) || )
         \
     "
     weather
+}
+
+
+function ag {
+    echo "Tom was right. You were wrong. RG is faster. Better. In every way."
 }

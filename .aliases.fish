@@ -98,6 +98,11 @@ alias vi=vim
 function venv  
     set SDIR (pwd)
     while true
+        if [ -d venv ]
+            echo "Sourcing env from (pwd)/venv"
+            source "venv/bin/activate.fish"
+            break
+        end
         if [ -d .venv ]
             echo "Sourcing env from (pwd)/.venv"
             source ".venv/bin/activate.fish"
