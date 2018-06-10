@@ -24,6 +24,7 @@ Bundle 'maralla/completor.vim'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'w0rp/ale'
 Bundle 'wincent/command-t'
+Bundle 'vim-scripts/ZoomWin'
 Bundle 'altercation/vim-colors-solarized'
 "Bundle 'jnurmine/Zenburn'
 Bundle 'tpope/vim-surround'
@@ -36,6 +37,7 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
 Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'majutsushi/tagbar'
+Bundle 'tmhedberg/matchit'
 Bundle 'fatih/vim-go'
 Bundle 'jmcantrell/vim-virtualenv'
 Bundle 'davidhalter/jedi-vim'
@@ -48,6 +50,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 Bundle 'tpope/vim-dadbod'
+Bundle 'leafgarland/typescript-vim'
 
 call vundle#end()
 
@@ -172,13 +175,13 @@ endif
 
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
-
 autocmd FileType tf setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal colorcolumn=100
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal colorcolumn=80
@@ -191,3 +194,4 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 
 autocmd filetype crontab setlocal nobackup nowritebackup
+nnoremap <silent> <C-w>z :ZoomWin<CR>

@@ -1,11 +1,10 @@
-#!/usr/bin/env zsh
-read -q "ignore?Make sure ZSH is installed and all requirements are satisfied."
-dotswd=`pwd`
-echo $dotswd
+#!/bin/bash
+read -p "Make sure your shell is installed and all requirements are satisfied."
+DOTSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
 function install_osx {
-  brew install vim ctags golang git tmux reattach-to-user-namespace
+  brew install `cat ${DOTSDIR}/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
 }
 
 function install_linux {
@@ -32,29 +31,48 @@ function install_dnf {
   sudo dnf install util-linux-user vim gvim ctags golang git tmux cmake
 }
 
-case "$OSTYPE" in
-  darwin*) install_osx ;; 
-  linux*)  install_linux ;;
-  *)       echo "Unsupported OS" ;;
-esac
+function install_ycm {
+    python2 ~/.vim/bundle/YouCompleteMe/install.py --all --gocode-completer
+}
 
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
+function install_zsh {
+    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+    /usr/bin/env zsh -c 'setopt EXTENDED_GLOB\
+        for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do \
+            ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}" \
+        done'
 
-ln -sf $dotswd/.aliases ~/
-ln -sf $dotswd/.muttrc ~/
-ln -sf $dotswd/.tmux.conf ~/
-ln -sf $dotswd/.vimrc ~/
-ln -sf $dotswd/.zshrc ~/
-ln -sf $dotswd/.zpreztorc ~/
-touch ~/.prienv
+    chsh -s $(which zsh)
+}
 
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+function install_omf {
+    curl -L https://get.oh-my.fish | fish
+    fish -c "omf theme clearance"
+}
 
-ln -sf $dotswd/yang.vim ~/.vim/
-python2 ~/.vim/bundle/YouCompleteMe/install.py --all --gocode-completer
-vim +PluginInstall +qall
+function link_dots {
+    ln -sf $DOTSDIR/.aliases ~/
+    ln -sf $DOTSDIR/.tmux.conf ~/
+    ln -sf $DOTSDIR/.vimrc ~/
+    ln -sf $DOTSDIR/.zshrc ~/
+    ln -sf $DOTSDIR/.zpreztorc ~/
+    touch ~/.prienv
+}
 
-chsh -s $(which zsh)
+function setup_vim {
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
+}
+
+function main {
+    case "$OSTYPE" in
+    darwin*) install_osx ;; 
+    linux*)  install_linux ;;
+    *)       echo "Unsupported OS" ;;
+    esac
+
+    setup_vim
+    install_omf
+}
+
+main $@
