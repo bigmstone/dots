@@ -1,7 +1,6 @@
 #!/bin/bash
 read -p "Make sure your shell is installed and all requirements are satisfied."
 DOTSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
 function install_osx {
   brew install `cat ${DOTSDIR}/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
@@ -64,6 +63,15 @@ function setup_vim {
     vim +PluginInstall +qall
 }
 
+function setup_git {
+    read -p "Git e-mail: " gitemail
+    read -p "Git name: " gitname
+    git config --global diff.tool vimdiff
+    git config --global merge.tool vimdiff
+    git config --global user.email "${gitemail}"
+    git config --global user.name "${gitname}"
+}
+
 function main {
     case "$OSTYPE" in
     darwin*) install_osx ;; 
@@ -73,6 +81,7 @@ function main {
 
     setup_vim
     install_omf
+    setup_git
 }
 
 main $@
