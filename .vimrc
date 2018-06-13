@@ -51,6 +51,7 @@ Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 Bundle 'tpope/vim-dadbod'
 Bundle 'leafgarland/typescript-vim'
+Bundle 'l04m33/vlime'
 
 call vundle#end()
 
