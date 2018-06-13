@@ -1,10 +1,19 @@
 #!/bin/bash
 read -p "Make sure your shell is installed and all requirements are satisfied."
-DOTSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DEV_FOLDER=~/dev
+#DOTSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTSDIR=${DEV_FOLDER}/dots
+BASE_URL="https://github.com/bigmstone/dots"
+RAW_BASE_URL="https://raw.githubusercontent.com/bigmstone/dots/master"
+BREW_FILE_URL="${RAW_BASE_URL}/brew.txt"
+BREW_CASK_FILE_URL="${RAW_BASE_URL}/brew-cask.txt"
 
 function install_osx {
-  brew install `cat ${DOTSDIR}/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
-  brew cask install `cat ${DOTSDIR}/brew-cask.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  curl -o /tmp/brew.txt ${BREW_FILE_URL}
+  curl -o /tmp/brew-cask.txt ${BREW_CASK_FILE_URL}
+  brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  brew cask install `cat /tmp/brew-cask.txt | sed ':a;N;$!ba;s/\n/ /g'`
 }
 
 function install_linux {
@@ -46,8 +55,10 @@ function install_zsh {
 }
 
 function install_omf {
-    curl -L https://get.oh-my.fish | fish
+    (curl -L https://get.oh-my.fish | fish)
     fish -c "omf theme clearance"
+    echo $(which fish) >> /etc/shells
+    chsh -s $(which fish)
 }
 
 function link_dots {
@@ -73,6 +84,22 @@ function setup_git {
     git config --global user.name "${gitname}"
 }
 
+function copy_aws_backup {
+    read -p "AWS Secret Key: " aws_secret
+    read -p "AWS Access Key: " aws_access
+
+    aws configure set aws_access_key_id ${aws_access}
+    aws configure set aws_secret_access_key ${aws_secret}
+
+    mkdir -p ${DEV_FOLDER}
+    aws s3 sync s3://savenv ${DEV_FOLDER}
+}
+
+function setup_python {
+    pyenv global 2.7.14 3.6.5
+    pip install pipenv awscli ipython[all]
+}
+
 function main {
     case "$OSTYPE" in
     darwin*) install_osx ;; 
@@ -83,6 +110,9 @@ function main {
     setup_vim
     install_omf
     setup_git
+    setup_python
+    copy_aws_backup
+    link_dots
 }
 
 main $@
