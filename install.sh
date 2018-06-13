@@ -4,6 +4,7 @@ DOTSDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function install_osx {
   brew install `cat ${DOTSDIR}/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  brew cask install `cat ${DOTSDIR}/brew-cask.txt | sed ':a;N;$!ba;s/\n/ /g'`
 }
 
 function install_linux {
