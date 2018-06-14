@@ -56,13 +56,16 @@ function install_zsh {
 
 function install_omf {
     (curl -L https://get.oh-my.fish | fish)
+    fish -c "omf install clearance"
     fish -c "omf theme clearance"
-    echo $(which fish) >> /etc/shells
+    sudo /bin/bash -c "echo $(which fish) >> /etc/shells"
     chsh -s $(which fish)
 }
 
 function link_dots {
     ln -sf $DOTSDIR/.aliases ~/
+    ln -sf $DOTSDIR/.aliases.fish ~/
+    ln -sf $DOTSDIR/exports.fish ~/.config/fish/conf.d/
     ln -sf $DOTSDIR/.tmux.conf ~/
     ln -sf $DOTSDIR/.vimrc ~/
     ln -sf $DOTSDIR/.zshrc ~/
@@ -88,11 +91,11 @@ function copy_aws_backup {
     read -p "AWS Secret Key: " aws_secret
     read -p "AWS Access Key: " aws_access
 
-    aws configure set aws_access_key_id ${aws_access}
-    aws configure set aws_secret_access_key ${aws_secret}
+    aws configure set --profile personal aws_access_key_id ${aws_access}
+    aws configure set --profile personal aws_secret_access_key ${aws_secret}
 
     mkdir -p ${DEV_FOLDER}
-    aws s3 sync s3://savenv ${DEV_FOLDER}
+    aws --profile personal s3 sync s3://savenv ${DEV_FOLDER}
 }
 
 function setup_python {
