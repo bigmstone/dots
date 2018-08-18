@@ -110,12 +110,12 @@ function main {
     *)       echo "Unsupported OS" ;;
     esac
 
-    setup_vim
     install_omf
     setup_git
     setup_python
     copy_aws_backup
     link_dots
+    setup_vim
 }
 
 main $@
