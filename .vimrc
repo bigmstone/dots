@@ -163,7 +163,7 @@ set incsearch
 
 "colorscheme distinguished
 "colorscheme solarized
-colorscheme gruvbox
+silent! colorscheme gruvbox
 "colorscheme afterglow
 "colorscheme falcon
 
