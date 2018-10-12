@@ -13,53 +13,89 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
+Bundle 'vim-scripts/mru.vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'tpope/vim-commentary'
+Bundle 'terryma/vim-expand-region'
+Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-repeat'
 Bundle 'kien/ctrlp.vim'
-Bundle 'plasticboy/vim-markdown'
 Bundle 'sjl/gundo.vim'
-"Bundle 'Valloric/YouCompleteMe'
-Bundle 'maralla/completor.vim'
+"Bundle 'maralla/completor.vim'
+"Bundle 'valloric/YouCompleteMe'
+Bundle 'ajh17/VimCompletesMe'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'w0rp/ale'
-Bundle 'wincent/command-t'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'altercation/vim-colors-solarized'
 "Bundle 'jnurmine/Zenburn'
+Bundle 'morhetz/gruvbox'
 Bundle 'tpope/vim-surround'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'danilo-augusto/vim-afterglow'
 Bundle 'wincent/Command-T'
 Bundle 'Lokaltog/vim-distinguished'
 Bundle 'fenetikm/falcon'
-Bundle 'bling/vim-airline'
+Bundle 'itchyny/lightline.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'majutsushi/tagbar'
 Bundle 'tmhedberg/matchit'
 Bundle 'fatih/vim-go'
-Bundle 'jmcantrell/vim-virtualenv'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'rust-lang/rust.vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'mxw/vim-jsx'
 Bundle 'chase/vim-ansible-yaml'
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'mattn/webapi-vim'
 Bundle 'mattn/gist-vim'
 Bundle 'tpope/vim-dadbod'
 Bundle 'leafgarland/typescript-vim'
 Bundle 'l04m33/vlime'
+Bundle 'amix/vim-zenroom2'
+Bundle 'junegunn/goyo.vim'
+Bundle 'ternjs/tern_for_vim'
+Bundle 'ramitos/jsctags'
+
 
 call vundle#end()
+
+nnoremap <silent> <leader>z :Goyo<cr>
+
+let g:user_emmet_leader_key='<C-Z>'
+
+let NERDTreeQuitOnOpen = 1
+map <silent> <C-n> :NERDTreeToggle<CR>
+let g:multi_cursor_use_default_mapping=0
+" Default mapping
+let g:multi_cursor_next_key='<C-s>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
+snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
+
+let MRU_Max_Entries = 400
+map <leader>f :MRU<CR>
+let g:yankstack_yank_keys = ['y', 'd']
+nmap <c-p> <Plug>yankstack_substitute_older_paste
+nmap <c-P> <Plug>yankstack_substitute_newer_paste
 
 let g:virtualenv_directory = '.'
 
 filetype plugin indent on
-
 let g:ale_sign_column_always = 1
+let g:ale_python_flake8_change_directory = 0
+let g:ale_python_pylint_change_directory = 0
+
 set statusline+=%#warningmsg#
 set statusline+=%*
 
@@ -87,6 +123,7 @@ set vb t_vb=
 
 autocmd VimEnter * Tagbar
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd FileType crontab setlocal nowritebackup
 
 set cursorline
 set ruler
@@ -96,7 +133,7 @@ set scrolloff=3
 set backspace=2
 set showmatch
 "set wrap
-"set textwidth=79
+set textwidth=80
 set colorcolumn=80
 set linebreak
 set autoindent
@@ -126,16 +163,16 @@ set incsearch
 
 "colorscheme distinguished
 "colorscheme solarized
+colorscheme gruvbox
 "colorscheme afterglow
-colorscheme falcon
+"colorscheme falcon
 
 hi Normal ctermbg=none
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
+let g:multi_cursor_next_key="\<C-s>"
 
-let NERDTreeQuitOnOpen = 1
-map <silent> <C-n> :NERDTreeToggl<CR>
 
 
 let g:tagbar_type_go = {

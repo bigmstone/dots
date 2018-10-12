@@ -160,3 +160,7 @@ ___) (___   | |   ___) (___| (___) || )
 function ag {
     echo "Tom was right. You were wrong. RG is faster. Better. In every way."
 }
+
+function opto_jpeg {
+    find ./src -regextype sed -regex ".*\.jpg" | xargs -I [] convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% [] []
+}

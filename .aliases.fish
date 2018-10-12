@@ -42,15 +42,12 @@ end
 function workin
     cd "$DEV/$argv"
 end
-function workgo
-    cd "$DEV/go/src/$argv"
-end
 function lsdev
     ls $DEV
 end
 function mkdev
     mkdir "$DEV/$argv"
-    workin "$argv"
+    workdev "$argv"
 end
 
 function gic
@@ -93,6 +90,11 @@ function workdev
     tmux -2 attach-session -d
 end
 
+function workgo
+    echo "go/src/github.com/$argv"
+    workdev "go/src/github.com/$argv"
+end
+
 alias vi=vim
 
 function venv  
@@ -114,7 +116,7 @@ function venv
             break
         end
         cd ../
-        if [ (PWD) = "/" ]
+        if [ (pwd) = "/" ]
             echo "No virtual environments found."
             break
         end
@@ -180,4 +182,26 @@ ___) (___   | |   ___) (___| (___) || )
         \
     "
     weather
+end
+
+function opto_jpeg
+    find ./src -regextype sed -regex ".*\.jpg" | xargs -I [] convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% [] []
+end
+
+function sound
+    echo \a
+end
+
+function gs
+    git status
+    git branch
+end
+
+function nvidia_reset
+    sudo rmmod nvidia_uvm
+    sudo modprobe nvidia_uvm
+end
+
+function m
+    mosh (vagrant ssh-config | grep HostName | tr -s ' ' | cut -d' ' -f 3)
 end

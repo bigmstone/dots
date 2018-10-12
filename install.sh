@@ -113,7 +113,7 @@ function main {
     install_omf
     setup_git
     setup_python
-    copy_aws_backup
+    # copy_aws_backup
     link_dots
     setup_vim
 }
