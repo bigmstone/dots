@@ -1,0 +1,30 @@
+---
+- name: Cloning Dots Repo
+  become: yes
+  become_user: "{{ user }}"
+  git:
+    repo: "https://github.com/bigmstone/dots.git"
+    dest: "{{ dev_dir }}/dots"
+- name: Creating dots symlinks
+  become: yes
+  become_user: "{{ user }}"
+  file:
+    src: "{{ dots_dir }}/{{ item }}"
+    dest: "{{ home_dir }}/{{ item }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: link
+  with_items:
+    - .aliases
+    - .aliases.fish
+    - .tmux.conf
+- name: Create prienv
+  become: yes
+  file:
+    path: "{{ home_dir }}/.prienv"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+    mode: 0600

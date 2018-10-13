@@ -1,0 +1,18 @@
+---
+- include_role:
+    name: bigmstone.dev
+- name: Install st2 system dependencies
+  become: true
+  apt:
+    state: latest
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - mongodb
+      - rabbitmq-server
+  when: ansible_distribution == 'Ubuntu'
+- name: Add stanley user
+  become: true
+  user:
+    name: stanley
+    comment: ST2 User

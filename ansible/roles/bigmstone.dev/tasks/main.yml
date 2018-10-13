@@ -1,0 +1,11 @@
+---
+- include_role:
+    name: bigmstone.system
+- include_role:
+    name: bigmstone.fish
+- include_role:
+    name: bigmstone.python
+- include_role:
+    name: bigmstone.vim
+- include_role:
+    name: bigmstone.dots

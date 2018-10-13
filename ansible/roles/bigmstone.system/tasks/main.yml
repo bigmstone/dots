@@ -1,0 +1,51 @@
+---
+- name: Install system dependencies
+  become: true
+  apt:
+    state: latest
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - mosh
+      - virtualbox
+      - tmux
+      - docker.io
+  when: ansible_distribution == 'Ubuntu'
+- name: Install vim osx
+  homebrew:
+    name:
+      - mosh
+      - tmux
+    state: latest
+    update_homebrew: yes
+  when: ansible_distribution == 'MacOSX'
+- homebrew_cask:
+    name:
+      - virtualbox
+      - docker
+    state: latest
+    update_homebrew: yes
+  when: ansible_distribution == 'MacOSX'
+- name: Add user
+  become: true
+  user:
+    name: "{{ user }}"
+    comment: "{{ name }}"
+    shell: /usr/bin/fish
+    groups:
+      - sudo
+      - docker
+- name: Set authorized key took from file
+  become: true
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+- name: Create dev directory
+  become: yes
+  file:
+    path: "{{ dev_dir }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    state: directory
+    mode: 0755
