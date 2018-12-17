@@ -12,7 +12,7 @@ alias weather='curl wttr.in'
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update'
 
 # IP addresses
-alias exip="curl myipv4.millnert.se"
+alias exip="curl ifconfig.co"
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)  3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print}'"
 
@@ -101,17 +101,17 @@ function venv
     set SDIR (pwd)
     while true
         if [ -d venv ]
-            echo "Sourcing env from (pwd)/venv"
+            echo "Sourcing env from $PWD/venv"
             source "venv/bin/activate.fish"
             break
         end
         if [ -d .venv ]
-            echo "Sourcing env from (pwd)/.venv"
+            echo "Sourcing env from $PWD/.venv"
             source ".venv/bin/activate.fish"
             break
         end
         if [ -d virtualenv ]
-            echo "Sourcing env from (pwd)/virtualenv"
+            echo "Sourcing env from $PWD/virtualenv"
             source "virtualenv/bin/activate.fish"
             break
         end
@@ -204,4 +204,12 @@ end
 
 function m
     mosh (vagrant ssh-config | grep HostName | tr -s ' ' | cut -d' ' -f 3)
+end
+
+function vnr
+    vagrant ssh -c "$argv[1]"; osascript -e 'display notification "Done"'
+end
+
+function nr
+    eval $argv[1]; osascript -e 'display notification "Done"'
 end

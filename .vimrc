@@ -26,12 +26,13 @@ Bundle 'maxbrunsfeld/vim-yankstack'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-repeat'
-Bundle 'kien/ctrlp.vim'
+Bundle 'moll/vim-node'
+"Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 "Bundle 'maralla/completor.vim'
 "Bundle 'valloric/YouCompleteMe'
 Bundle 'ajh17/VimCompletesMe'
-Bundle 'jelera/vim-javascript-syntax'
+Bundle 'pangloss/vim-javascript'
 Bundle 'w0rp/ale'
 Bundle 'vim-scripts/ZoomWin'
 Bundle 'altercation/vim-colors-solarized'
@@ -86,8 +87,10 @@ snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
 let g:yankstack_yank_keys = ['y', 'd']
-nmap <c-p> <Plug>yankstack_substitute_older_paste
-nmap <c-P> <Plug>yankstack_substitute_newer_paste
+"nmap <c-p> <Plug>yankstack_substitute_older_paste
+"nmap <c-P> <Plug>yankstack_substitute_newer_paste
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 let g:virtualenv_directory = '.'
 
@@ -95,6 +98,11 @@ filetype plugin indent on
 let g:ale_sign_column_always = 1
 let g:ale_python_flake8_change_directory = 0
 let g:ale_python_pylint_change_directory = 0
+let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linters = {'js': ['stylelint', 'eslint']}
+let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
+let g:ale_linters = {'ts': ['stylelint', 'tslint']}
+let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
 
 set statusline+=%#warningmsg#
 set statusline+=%*
@@ -220,6 +228,7 @@ autocmd FileType yml setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal colorcolumn=100
 autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType json setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal colorcolumn=80
@@ -233,3 +242,8 @@ hi SpellBad cterm=underline
 
 autocmd filetype crontab setlocal nobackup nowritebackup
 nnoremap <silent> <C-w>z :ZoomWin<CR>
+
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fix_on_save = 1
+
+

@@ -29,6 +29,12 @@
   args:
     executable: /usr/bin/fish
     creates: "{{ home_dir }}/.config/omf"
+- name: Creates conf.d directory
+  become: yes
+  become_user: "{{ user }}"
+  file:
+    path: "{{ home_dir }}/.config/fish/conf.d"
+    state: directory
 - name: Adding exports.fish
   become: yes
   become_user: "{{ user }}"
