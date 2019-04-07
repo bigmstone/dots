@@ -65,14 +65,16 @@ Bundle 'amix/vim-zenroom2'
 Bundle 'junegunn/goyo.vim'
 Bundle 'ternjs/tern_for_vim'
 Bundle 'ramitos/jsctags'
-
-
+Bundle 'elzr/vim-json'
+Bundle 'dominikduda/vim_current_word'
+Bundle 'tikhomirov/vim-glsl'
 call vundle#end()
 
 nnoremap <silent> <leader>z :Goyo<cr>
 
 let g:user_emmet_leader_key='<C-Z>'
 
+let NERDTreeMapOpenInTab='t'
 let NERDTreeQuitOnOpen = 1
 map <silent> <C-n> :NERDTreeToggle<CR>
 let g:multi_cursor_use_default_mapping=0
@@ -128,7 +130,7 @@ set t_Co=256
 
 set noerrorbells
 set vb t_vb=
-
+let g:vim_json_syntax_conceal = 0
 autocmd VimEnter * Tagbar
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 autocmd FileType crontab setlocal nowritebackup
@@ -170,7 +172,7 @@ set incsearch
 
 
 "colorscheme distinguished
-"colorscheme solarized
+" colorscheme solarized
 silent! colorscheme gruvbox
 "colorscheme afterglow
 "colorscheme falcon
@@ -234,6 +236,9 @@ autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal colorcolumn=80
 autocmd FileType go setlocal colorcolumn=100
 
+
+let g:rustfmt_autosave = 1
+
 set spell
 set spelllang=en_us
 
@@ -245,5 +250,3 @@ nnoremap <silent> <C-w>z :ZoomWin<CR>
 
 let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 1
-
-

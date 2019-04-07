@@ -6,7 +6,7 @@ export EDITOR=vim
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 
 # RUST or BUST...or something.
-# source $HOME/.cargo/env
+source $HOME/.cargo/env
 
 # Load aliases
 source $HOME/.aliases.fish

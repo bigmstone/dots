@@ -29,9 +29,12 @@ source $HOME/.aliases
 source $HOME/.prienv
 autoload -Uz promptinit
 promptinit
-prompt steeef
+prompt paradox
 
 export PATH=~/Library/Python/3.6/bin:$PATH
+
+# RUST or BUST...or something.
+source $HOME/.cargo/env
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
@@ -39,7 +42,6 @@ export PATH=~/Library/Python/3.6/bin:$PATH
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
-eval "$(rbenv init -)"
+
+eval "$(pyenv init -)"
