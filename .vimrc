@@ -30,8 +30,9 @@ Bundle 'moll/vim-node'
 "Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 "Bundle 'maralla/completor.vim'
-"Bundle 'valloric/YouCompleteMe'
-Bundle 'ajh17/VimCompletesMe'
+Bundle 'valloric/YouCompleteMe'
+Bundle 'racer-rust/vim-racer'
+" Bundle 'ajh17/VimCompletesMe'
 Bundle 'pangloss/vim-javascript'
 Bundle 'w0rp/ale'
 Bundle 'vim-scripts/ZoomWin'
@@ -182,7 +183,6 @@ highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
 let g:multi_cursor_next_key="\<C-s>"
-
 
 
 let g:tagbar_type_go = {
