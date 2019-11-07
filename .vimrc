@@ -10,6 +10,7 @@ set clipboard=unnamed
 set conceallevel=0
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
@@ -30,7 +31,7 @@ Bundle 'moll/vim-node'
 "Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 "Bundle 'maralla/completor.vim'
-Bundle 'valloric/YouCompleteMe'
+Bundle 'ycm-core/YouCompleteMe'
 Bundle 'racer-rust/vim-racer'
 " Bundle 'ajh17/VimCompletesMe'
 Bundle 'pangloss/vim-javascript'
@@ -54,6 +55,10 @@ Bundle 'fatih/vim-go'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'rust-lang/rust.vim'
+Bundle 'prabirshrestha/async.vim'
+Bundle 'prabirshrestha/vim-lsp'
+Bundle 'prabirshrestha/asyncomplete.vim'
+Bundle 'prabirshrestha/asyncomplete-lsp.vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'mxw/vim-jsx'
 Bundle 'chase/vim-ansible-yaml'
@@ -69,13 +74,26 @@ Bundle 'ramitos/jsctags'
 Bundle 'elzr/vim-json'
 Bundle 'dominikduda/vim_current_word'
 Bundle 'tikhomirov/vim-glsl'
+" Bundle 'ap/vim-buftabline'
+" Bundle 'PieterjanMontens/vim-pipenv'
 call vundle#end()
 
-nnoremap <silent> <leader>z :Goyo<cr>
+" Easy Buffer movement
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>  
 
+"Some Rust Stuff
+let g:racer_experimental_completer = 1
+autocmd FileType rust nmap gd <Plug>(rust-def)
+autocmd FileType rust nmap gs <Plug>(rust-def-split)
+autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
+autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+nnoremap <silent> <leader>z :Goyo<cr>
 let g:user_emmet_leader_key='<C-Z>'
 
-let NERDTreeMapOpenInTab='t'
+" let NERDTreeMapOpenInTab='t'
 let NERDTreeQuitOnOpen = 1
 map <silent> <C-n> :NERDTreeToggle<CR>
 let g:multi_cursor_use_default_mapping=0
@@ -106,6 +124,13 @@ let g:ale_linters = {'js': ['stylelint', 'eslint']}
 let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
 let g:ale_linters = {'ts': ['stylelint', 'tslint']}
 let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
+" let g:ale_linters = {'rust': ['rls']}
+let g:ale_rust_rls_executable = '/Users/mstone/.cargo/bin/rls'
+let g:ale_rust_rls_config = {'rust': {'clippy_preference': 'on'}}
+let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_rust_cargo_use_clippy = 1
+" let g:ale_rust_cargo_clippy_options = '-D warnings'
+" let g:ale_open_list = 1
 
 set statusline+=%#warningmsg#
 set statusline+=%*
@@ -250,3 +275,11 @@ nnoremap <silent> <C-w>z :ZoomWin<CR>
 
 let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 1
+
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif 

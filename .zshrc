@@ -18,6 +18,7 @@ export PATH="$PATH:$HOME/dev/bin"
 export PATH="$PATH:$HOME/dev/go/bin"
 export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/dev/bin:$PATH"
 export GOPATH=$HOME/dev/go
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VISUAL=vim
@@ -29,7 +30,8 @@ source $HOME/.aliases
 source $HOME/.prienv
 autoload -Uz promptinit
 promptinit
-prompt paradox
+# prompt paradox
+prompt steeef
 
 export PATH=~/Library/Python/3.6/bin:$PATH
 
