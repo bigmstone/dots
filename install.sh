@@ -32,16 +32,13 @@ function install_linux {
 
 function install_apt {
   echo "Installing with APT"
-  sudo apt-get -y install vim ctags golang git tmux cmake
+  sudo apt-get -y install vim universal-ctags golang git tmux cmake
 }
 
 function install_dnf {
   echo "Installing with DNF"
-  sudo dnf install util-linux-user vim gvim ctags golang git tmux cmake
-}
-
-function install_ycm {
-    python2 ~/.vim/bundle/YouCompleteMe/install.py --all --gocode-completer
+  sudo dnf copr enable thindil/universal-ctags
+  sudo dnf install util-linux-user vim gvim universal-ctags golang git tmux cmake sqlite-devel bzip2-devel readline-devel openssl-devel zlib-devel make gcc links
 }
 
 function install_zsh {
@@ -73,9 +70,14 @@ function link_dots {
     touch ~/.prienv
 }
 
+function setup_ycm {
+    python ~/.vim/bundle/YouCompleteMe/install.py --all
+}
+
 function setup_vim {
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     vim +PluginInstall +qall
+    setup_ycm
 }
 
 function setup_git {
@@ -99,7 +101,8 @@ function copy_aws_backup {
 }
 
 function setup_python {
-    pyenv global 2.7.14 3.6.5
+    pyenv install 3.8.0 3.7.5 2.7.14
+    pyenv global 3.7.5 2.7.14
     pip install pipenv awscli ipython[all]
 }
 
@@ -110,7 +113,7 @@ function main {
     *)       echo "Unsupported OS" ;;
     esac
 
-    install_omf
+    install_zsh
     setup_git
     setup_python
     # copy_aws_backup

@@ -17,6 +17,7 @@ export PATH="$PATH:$HOME/dev/arcanist/bin"
 export PATH="$PATH:$HOME/dev/bin"
 export PATH="$PATH:$HOME/dev/go/bin"
 export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/dev/bin:$PATH"
 export GOPATH=$HOME/dev/go
