@@ -9,7 +9,7 @@ BREW_FILE_URL="${RAW_BASE_URL}/brew.txt"
 BREW_CASK_FILE_URL="${RAW_BASE_URL}/brew-cask.txt"
 
 function install_osx {
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
   curl -o /tmp/brew-cask.txt ${BREW_CASK_FILE_URL}
   brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
