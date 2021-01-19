@@ -13,9 +13,11 @@ fi
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+export PATH="/opt/homebrew/bin:$PATH"
 export PATH="$PATH:$HOME/dev/arcanist/bin"
 export PATH="$PATH:$HOME/dev/bin"
 export PATH="$PATH:$HOME/dev/go/bin"
+export PATH="$PATH:$HOME/.bin"
 export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
@@ -48,3 +50,5 @@ source $HOME/.cargo/env
 
 
 eval "$(pyenv init -)"
+
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).

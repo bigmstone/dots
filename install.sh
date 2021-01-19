@@ -107,11 +107,6 @@ function setup_python {
 }
 
 function main {
-    case "$OSTYPE" in
-    darwin*) install_osx ;; 
-    linux*)  install_linux ;;
-    *)       echo "Unsupported OS" ;;
-    esac
 
     install_zsh
     setup_git

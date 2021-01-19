@@ -52,7 +52,7 @@ Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'majutsushi/tagbar'
 Bundle 'tmhedberg/matchit'
 Bundle 'fatih/vim-go'
-Bundle 'davidhalter/jedi-vim'
+" Bundle 'davidhalter/jedi-vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'rust-lang/rust.vim'
 Bundle 'prabirshrestha/async.vim'
@@ -125,12 +125,21 @@ let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
 let g:ale_linters = {'ts': ['stylelint', 'tslint']}
 let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
 " let g:ale_linters = {'rust': ['rls']}
-let g:ale_rust_rls_executable = '/Users/mstone/.cargo/bin/rls'
-let g:ale_rust_rls_config = {'rust': {'clippy_preference': 'on'}}
-let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_rust_rls_executable = '/Users/mstone/.cargo/bin/rls'
+" let g:ale_rust_rls_config = {'rust': {'clippy_preference': 'on'}}
+" let g:ale_rust_rls_toolchain = 'stable'
 " let g:ale_rust_cargo_use_clippy = 1
 " let g:ale_rust_cargo_clippy_options = '-D warnings'
 " let g:ale_open_list = 1
+let g:ycm_language_server =
+\ [
+\   {
+\     'name': 'rust',
+\     'cmdline': ['rust-analyzer'],
+\     'filetypes': ['rust'],
+\     'project_root_files': ['Cargo.toml']
+\   }
+\ ]
 
 set statusline+=%#warningmsg#
 set statusline+=%*
