@@ -1,22 +1,13 @@
 set nocompatible
 filetype off
 
-set shell=/bin/bash
-
-set mouse=a
-set ttymouse=sgr
-set clipboard=unnamed
-
-set conceallevel=0
-
+" Vundle for life
 set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 Bundle 'vim-scripts/mru.vim'
-" Bundle 'MarcWeber/vim-addon-mw-utils'
-" Bundle 'tomtom/tlib_vim'
 Bundle 'tpope/vim-commentary'
 Bundle 'terryma/vim-expand-region'
 Bundle 'terryma/vim-multiple-cursors'
@@ -45,110 +36,27 @@ Bundle 'junegunn/limelight.vim'
 Bundle 'elzr/vim-json'
 Bundle 'dominikduda/vim_current_word'
 Bundle 'tikhomirov/vim-glsl'
-" Bundle 'ap/vim-buftabline'
-" Bundle 'PieterjanMontens/vim-pipenv'
 call vundle#end()
 
-" Easy Buffer movement
-map gn :bn<cr>
-map gp :bp<cr>
-map gd :bd<cr>  
-
-"Some Rust Stuff
-let g:racer_experimental_completer = 1
-autocmd FileType rust nmap gd <Plug>(rust-def)
-autocmd FileType rust nmap gs <Plug>(rust-def-split)
-autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
-autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-nnoremap <silent> <leader>z :Goyo<cr>
-let g:user_emmet_leader_key='<C-Z>'
-
-" let NERDTreeMapOpenInTab='t'
-let NERDTreeQuitOnOpen = 1
-map <silent> <C-n> :NERDTreeToggle<CR>
-let g:multi_cursor_use_default_mapping=0
-" Default mapping
-let g:multi_cursor_next_key='<C-s>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
-
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-let g:yankstack_yank_keys = ['y', 'd']
-"nmap <c-p> <Plug>yankstack_substitute_older_paste
-"nmap <c-P> <Plug>yankstack_substitute_newer_paste
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
-
-let g:virtualenv_directory = '.'
-
-filetype plugin indent on
-let g:ale_sign_column_always = 1
-let g:ale_python_flake8_change_directory = 0
-let g:ale_python_pylint_change_directory = 0
-let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
-let g:ale_linters = {'js': ['stylelint', 'eslint']}
-let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
-let g:ale_linters = {'ts': ['stylelint', 'tslint']}
-let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
-" let g:ale_linters = {'rust': ['rls']}
-" let g:ale_rust_rls_executable = '/Users/mstone/.cargo/bin/rls'
-" let g:ale_rust_rls_config = {'rust': {'clippy_preference': 'on'}}
-" let g:ale_rust_rls_toolchain = 'stable'
-" let g:ale_rust_cargo_use_clippy = 1
-" let g:ale_rust_cargo_clippy_options = '-D warnings'
-" let g:ale_open_list = 1
-let g:ycm_language_server =
-\ [
-\   {
-\     'name': 'rust',
-\     'cmdline': ['rust-analyzer'],
-\     'filetypes': ['rust'],
-\     'project_root_files': ['Cargo.toml']
-\   }
-\ ]
-
-set statusline+=%#warningmsg#
-set statusline+=%*
-
-"set statusline+=%{SyntasticStatuslineFlag()}
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_go_checkers = ['gometalinter']
-"let g:syntastic_javascript_checkers = ['eslint']
-
-let g:ackprg = 'rg --vimgrep'
-
-syntax on
-filetype on
-filetype plugin indent on
+" General Stuffs
+set shell=/bin/bash
+set mouse=a
+set ttymouse=sgr
+set clipboard=unnamed
 set number
 set background=dark
 set title
-set wildmenu
+set wildmenu " Only the wildest of menus for me...
 set wildmode=full
 set t_Co=256
-
 set noerrorbells
-set vb t_vb=
-let g:vim_json_syntax_conceal = 0
-autocmd VimEnter * Tagbar
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-autocmd FileType crontab setlocal nowritebackup
-
+set vb t_vb= " WTAF is this?
 set cursorline
-set ruler
 set nostartofline
 set virtualedit=block
 set scrolloff=3
 set backspace=2
 set showmatch
-"set wrap
 set textwidth=80
 set colorcolumn=80
 set linebreak
@@ -165,7 +73,6 @@ set noautoread
 set modeline
 set modelines=5
 set ls=2
-set vb t_vb=
 set showcmd
 set report=0
 set shortmess+=a
@@ -175,49 +82,96 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-
-
-"colorscheme distinguished
-" colorscheme solarized
+set spell
+set spelllang=en_us
+syntax on
 silent! colorscheme gruvbox
-"colorscheme afterglow
-"colorscheme falcon
-
 hi Normal ctermbg=none
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
-let g:multi_cursor_next_key="\<C-s>"
+" I feel like I never get conceallevel right...
+set conceallevel=0
 
 
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-    \ }
+let g:user_emmet_leader_key='<C-Z>'
 
+" Tagbar
+autocmd VimEnter * Tagbar
+
+" Where should this go? Why do I turn filetype off above? What is life?
+filetype on
+filetype plugin indent on
+
+" Easy Buffer movement; Do I need this still?
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>  
+
+" Goyo
+nnoremap <silent> <leader>z :Goyo<cr>
+
+" NERDTree
+let NERDTreeQuitOnOpen = 1
+map <silent> <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Multi Cursor Mapping
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-s>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" MRU
+let MRU_Max_Entries = 400
+map <leader>f :MRU<CR>
+
+" Yankstack
+let g:yankstack_yank_keys = ['y', 'd']
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+" I try never to write python...
+let g:virtualenv_directory = '.'
+
+" Ale stuff
+let g:ale_sign_column_always = 1
+let g:ale_python_flake8_change_directory = 0
+let g:ale_python_pylint_change_directory = 0
+let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_linters = {'js': ['stylelint', 'eslint']}
+let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
+let g:ale_linters = {'ts': ['stylelint', 'tslint']}
+let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fix_on_save = 1
+
+" YCM never works like I want it to
+let g:ycm_language_server =
+\ [
+\   {
+\     'name': 'rust',
+\     'cmdline': ['rust-analyzer'],
+\     'filetypes': ['rust'],
+\     'project_root_files': ['Cargo.toml']
+\   }
+\ ]
+
+" Status Line
+set statusline+=%#warningmsg#
+set statusline+=%*
+
+" Ack set to RG
+let g:ackprg = 'rg --vimgrep'
+
+" JSON
+let g:vim_json_syntax_conceal = 0
+
+" JSX
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+" Long live tmux
 if &term =~ '^screen'
     " tmux will send xterm-style keys when its xterm-keys option is on
     execute "set <xUp>=\e[1;*A"
@@ -226,8 +180,7 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-
+" Various handlings of file specific things
 autocmd FileType tf setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
@@ -240,22 +193,16 @@ autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal colorcolumn=80
 autocmd FileType go setlocal colorcolumn=100
-
-
-let g:rustfmt_autosave = 1
-
-set spell
-set spelllang=en_us
-
-hi clear SpellBad
-hi SpellBad cterm=underline
-
 autocmd filetype crontab setlocal nobackup nowritebackup
-nnoremap <silent> <C-w>z :ZoomWin<CR>
 
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
-let g:ale_fix_on_save = 1
-
+"Some Rust Stuff
+let g:racer_experimental_completer = 1
+autocmd FileType rust setlocal colorcolumn=100
+autocmd FileType rust nmap gd <Plug>(rust-def)
+autocmd FileType rust nmap gs <Plug>(rust-def-split)
+autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
+autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
+let g:rustfmt_autosave = 1
 if executable('rls')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'rls',
@@ -263,3 +210,7 @@ if executable('rls')
         \ 'whitelist': ['rust'],
         \ })
 endif 
+
+" Spell Bad because I spell bad....
+hi clear SpellBad
+hi SpellBad cterm=underline

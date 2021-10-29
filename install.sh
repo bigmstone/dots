@@ -99,6 +99,7 @@ function setup_python {
 }
 
 function main {
+    install_osx
     install_zsh
     setup_git
     install_rust
