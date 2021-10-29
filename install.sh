@@ -8,6 +8,10 @@ RAW_BASE_URL="https://raw.githubusercontent.com/bigmstone/dots/master"
 BREW_FILE_URL="${RAW_BASE_URL}/brew.txt"
 BREW_CASK_FILE_URL="${RAW_BASE_URL}/brew-cask.txt"
 
+function install_rust {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+}
+
 function install_osx {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
@@ -89,29 +93,17 @@ function setup_git {
     git config --global user.name "${gitname}"
 }
 
-function copy_aws_backup {
-    read -p "AWS Secret Key: " aws_secret
-    read -p "AWS Access Key: " aws_access
-
-    aws configure set --profile personal aws_access_key_id ${aws_access}
-    aws configure set --profile personal aws_secret_access_key ${aws_secret}
-
-    mkdir -p ${DEV_FOLDER}
-    aws --profile personal s3 sync s3://savenv ${DEV_FOLDER}
-}
-
 function setup_python {
-    pyenv install 3.8.0 3.7.5 2.7.14
-    pyenv global 3.7.5 2.7.14
-    pip install pipenv awscli ipython[all]
+    pyenv install 3.10.0
+    pyenv global 3.10.0
 }
 
 function main {
-
     install_zsh
     setup_git
+    install_rust
     setup_python
-    # copy_aws_backup
+    setup_ycm
     link_dots
     setup_vim
 }

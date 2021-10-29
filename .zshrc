@@ -11,6 +11,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH="/opt/homebrew/bin:$PATH"
@@ -19,9 +20,10 @@ export PATH="$PATH:$HOME/dev/bin"
 export PATH="$PATH:$HOME/dev/go/bin"
 export PATH="$PATH:$HOME/.bin"
 export PATH="$HOME/Library/Haskell/bin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/dev/bin:$PATH"
+export PATH="$HOME/.pyenv/shims:$PATH"
+export PATH="$(brew --prefix)/bin:${PATH}"
 export GOPATH=$HOME/dev/go
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VISUAL=vim
