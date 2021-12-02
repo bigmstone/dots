@@ -110,6 +110,7 @@ map gd :bd<cr>
 
 " Goyo
 nnoremap <silent> <leader>z :Goyo<cr>
+let g:goyo_width=100
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1
@@ -193,7 +194,8 @@ autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal colorcolumn=80
 autocmd FileType go setlocal colorcolumn=100
-autocmd filetype crontab setlocal nobackup nowritebackup
+autocmd FileType crontab setlocal nobackup nowritebackup
+autocmd FileType markdown setlocal colorcolumn=80 textwidth=80
 
 "Some Rust Stuff
 let g:racer_experimental_completer = 1
