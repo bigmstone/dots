@@ -37,8 +37,11 @@ alias pypiup='python setup.py sdist upload'
 alias tmux='TERM=xterm-256color tmux'
 
 workin () { cd "$DEV/$@"; }
+
+compdef "_files -W $DEV" workin
+
 workgo () { cd "$DEV/go/src/$@"; }
-lsdev () { ls $DEV; }
+lsdev () { echo "$(ls $DEV)"; }
 mkdev () {  mkdir "$DEV/$@"; workin "$@"; }
 
 gic () { echo "Making dev directory: $2";
@@ -57,8 +60,8 @@ workdev () {
     if [ -z "$@" ]; then
         tmux new-session -d
     else
-        cd "$DEV/$1";
-        tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+        dir="$DEV/$1";
+        tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"
     fi
     tmux rename-window "Dev"
     tmux new-window -n "Test"
@@ -66,6 +69,16 @@ workdev () {
     tmux select-window -n
     tmux -2 attach-session -d
 }
+
+compdef "_files -W $DEV" workdev
+
+attachdev () {
+    dir="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')";
+
+    tmux attach -t "$dir"
+}
+
+compdef "_files -W $DEV" attachdev
 
 alias vi=vim
 
