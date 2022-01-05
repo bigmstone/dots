@@ -196,6 +196,7 @@ autocmd FileType python setlocal colorcolumn=80
 autocmd FileType go setlocal colorcolumn=100
 autocmd FileType crontab setlocal nobackup nowritebackup
 autocmd FileType markdown setlocal colorcolumn=80 textwidth=80
+autocmd FileType markdown let g:indentLine_setConceal=0
 
 "Some Rust Stuff
 let g:racer_experimental_completer = 1
