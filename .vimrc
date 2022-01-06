@@ -16,14 +16,12 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-repeat'
 Bundle 'moll/vim-node'
 Bundle 'ycm-core/YouCompleteMe'
-Bundle 'racer-rust/vim-racer'
 Bundle 'w0rp/ale'
 Bundle 'morhetz/gruvbox'
 Bundle 'tpope/vim-surround'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'danilo-augusto/vim-afterglow'
 Bundle 'wincent/Command-T'
-Bundle 'itchyny/lightline.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'majutsushi/tagbar'
@@ -36,6 +34,7 @@ Bundle 'junegunn/limelight.vim'
 Bundle 'elzr/vim-json'
 Bundle 'dominikduda/vim_current_word'
 Bundle 'tikhomirov/vim-glsl'
+Bundle 'vim-airline/vim-airline'
 call vundle#end()
 
 " General Stuffs
@@ -162,6 +161,7 @@ let g:ycm_language_server =
 " Status Line
 set statusline+=%#warningmsg#
 set statusline+=%*
+let g:airline#extensions#tabline#enabled = 1
 
 " Ack set to RG
 let g:ackprg = 'rg --vimgrep'
@@ -201,10 +201,8 @@ autocmd FileType markdown let g:indentLine_setConceal=0
 "Some Rust Stuff
 let g:racer_experimental_completer = 1
 autocmd FileType rust setlocal colorcolumn=100
-autocmd FileType rust nmap gd <Plug>(rust-def)
 autocmd FileType rust nmap gs <Plug>(rust-def-split)
 autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
-autocmd FileType rust nmap <leader>gd <Plug>(rust-doc)
 let g:rustfmt_autosave = 1
 if executable('rls')
     au User lsp_setup call lsp#register_server({
