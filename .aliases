@@ -64,8 +64,8 @@ workdev () {
         tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"
     fi
     tmux rename-window "Dev"
-    tmux new-window -n "Test"
-    tmux split-window -v
+    tmux new-window -n "Test" -c "$dir"
+    tmux split-window -v -c "$dir"
     tmux select-window -n
     tmux -2 attach-session -d
 }
