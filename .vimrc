@@ -2,40 +2,41 @@ set nocompatible
 filetype off
 
 " Vundle for life
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=/usr/local/opt/fzf
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" set rtp+=~/.vim/bundle/Vundle.vim
+" set rtp+=/usr/local/opt/fzf
 
-Bundle 'vim-scripts/mru.vim'
-Bundle 'tpope/vim-commentary'
-Bundle 'terryma/vim-expand-region'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'maxbrunsfeld/vim-yankstack'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'moll/vim-node'
-Bundle 'ycm-core/YouCompleteMe'
-Bundle 'w0rp/ale'
-Bundle 'morhetz/gruvbox'
-Bundle 'tpope/vim-surround'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'danilo-augusto/vim-afterglow'
-Bundle 'wincent/Command-T'
-Bundle 'scrooloose/nerdtree'
-Bundle 'Xuyuanp/nerdtree-git-plugin'
-Bundle 'majutsushi/tagbar'
-Bundle 'tmhedberg/matchit'
-Bundle 'mileszs/ack.vim'
-Bundle 'rust-lang/rust.vim'
-Bundle 'Yggdroot/indentLine'
-Bundle 'junegunn/goyo.vim'
-Bundle 'junegunn/limelight.vim'
-Bundle 'elzr/vim-json'
-Bundle 'dominikduda/vim_current_word'
-Bundle 'tikhomirov/vim-glsl'
-Bundle 'vim-airline/vim-airline'
-call vundle#end()
+call plug#begin()
+Plug 'vim-scripts/mru.vim'
+Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'moll/vim-node'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'w0rp/ale'
+Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-surround'
+Plug 'airblade/vim-gitgutter'
+Plug 'danilo-augusto/vim-afterglow'
+Plug 'wincent/Command-T'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'majutsushi/tagbar'
+Plug 'tmhedberg/matchit'
+Plug 'mileszs/ack.vim'
+Plug 'rust-lang/rust.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'elzr/vim-json'
+Plug 'dominikduda/vim_current_word'
+Plug 'tikhomirov/vim-glsl'
+Plug 'vim-airline/vim-airline'
+Plug 'ziglang/zig.vim'
+Plug 'liuchengxu/graphviz.vim'
+call plug#end()
 
 " General Stuffs
 set shell=/bin/bash
