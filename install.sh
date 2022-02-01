@@ -15,9 +15,7 @@ function install_rust {
 function install_osx {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
-  curl -o /tmp/brew-cask.txt ${BREW_CASK_FILE_URL}
-  brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
-  brew cask install `cat /tmp/brew-cask.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  xargs brew install < /tmp/brew.txt
 }
 
 function install_linux {
@@ -55,14 +53,6 @@ function install_zsh {
     chsh -s $(which zsh)
 }
 
-function install_omf {
-    (curl -L https://get.oh-my.fish | fish)
-    fish -c "omf install clearance"
-    fish -c "omf theme clearance"
-    sudo /bin/bash -c "echo $(which fish) >> /etc/shells"
-    chsh -s $(which fish)
-}
-
 function link_dots {
     ln -sf $DOTSDIR/.aliases ~/
     ln -sf $DOTSDIR/.aliases.fish ~/
@@ -72,16 +62,12 @@ function link_dots {
     ln -sf $DOTSDIR/.zshrc ~/
     ln -sf $DOTSDIR/.zpreztorc ~/
     touch ~/.prienv
-}
-
-function setup_ycm {
-    python ~/.vim/bundle/YouCompleteMe/install.py --all
+    mkdir ~/.bin
 }
 
 function setup_vim {
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    vim +PluginInstall +qall
-    setup_ycm
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    vim +PlugInstall +qall
 }
 
 function setup_git {
@@ -91,6 +77,7 @@ function setup_git {
     git config --global merge.tool vimdiff
     git config --global user.email "${gitemail}"
     git config --global user.name "${gitname}"
+    git config --global init.defaultBranch main
 }
 
 function setup_python {
@@ -104,7 +91,6 @@ function main {
     setup_git
     install_rust
     setup_python
-    setup_ycm
     link_dots
     setup_vim
 }
