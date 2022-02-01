@@ -1,20 +1,15 @@
 set nocompatible
 filetype off
 
-" Vundle for life
-" set rtp+=~/.vim/bundle/Vundle.vim
-" set rtp+=/usr/local/opt/fzf
-
 call plug#begin()
 Plug 'vim-scripts/mru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-expand-region'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'moll/vim-node'
-Plug 'ycm-core/YouCompleteMe'
+Plug 'neoclide/coc.nvim'
 Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
@@ -36,6 +31,9 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'vim-airline/vim-airline'
 Plug 'ziglang/zig.vim'
 Plug 'liuchengxu/graphviz.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'mg979/vim-visual-multi'
 call plug#end()
 
 " General Stuffs
@@ -107,6 +105,9 @@ filetype plugin indent on
 map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>  
+
+" fzf Map
+map ; :Rg<CR>
 
 " Goyo
 nnoremap <silent> <leader>z :Goyo<cr>
