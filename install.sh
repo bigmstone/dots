@@ -16,6 +16,7 @@ function install_osx {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
   xargs brew install < /tmp/brew.txt
+  brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
 }
 
 function install_linux {

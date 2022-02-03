@@ -177,3 +177,56 @@ function ag {
 function opto_jpeg {
     find ./src -regextype sed -regex ".*\.jpg" | xargs -I [] convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% [] []
 }
+
+function aws-rotate-key {
+    # Requires GAWK, aws-cli, RipGrep, and jq
+
+    USER_NAME=${1:-matthew_stone}
+    PROFILE=${2:-default}
+
+
+    CURRENT_KEY=`cat ~/.aws/credentials | rg "\[$PROFILE\]" -A 2 | rg "aws_access_key_id\s+=\s+(.*)" -r '$1'`
+    echo "Rotating from key $CURRENT_KEY. Press any key to continue..."; read -k1 -s
+
+    NEW_KEY=`aws --profile $PROFILE iam create-access-key --user-name $USER_NAME`
+    NEW_ACCESS_KEY_ID=`echo "$NEW_KEY" | jq '.AccessKey.AccessKeyId'| sed 's/\"//g'`
+    NEW_SECRET_ACCESS_KEY=`echo "$NEW_KEY" | jq '.AccessKey.SecretAccessKey' | sed 's/\"//g'`
+
+    AWK=`cat << EOF
+    BEGIN {s="no"; f="no"}
+    (s=="yes" && /^\[/) {f="yes"}
+    /^\[$PROFILE\]/ {s="yes"}
+
+    (s=="yes" && f=="no") {
+        if (\\$0 ~ /aws_access_key_id*/) {
+            print "aws_access_key_id = $NEW_ACCESS_KEY_ID"
+        } else if (\\$0 ~ /aws_secret_access_key*/) {
+            print "aws_secret_access_key = $NEW_SECRET_ACCESS_KEY"
+        } else {
+            print \\$0
+        }
+    }
+
+    ((s=="no" && f=="no") || (s=="yes" && f=="yes")){
+        print \\$0
+    }
+    EOF`
+
+    gawk -i inplace "$AWK" ~/.aws/credentials
+
+    echo "Acquired new key and written to credentials file. Ready to deactivate old key? Press any key to continue..."; read -k1 -s
+
+    aws --profile $PROFILE iam update-access-key --access-key-id $CURRENT_KEY --status Inactive --user-name $USER_NAME
+    echo "Done..."
+}
+
+function aws-delete-inactive {
+    echo "I need to build this"; read -k1 -s
+}
+
+function aws-rotate-all-keys {
+    aws-delete-inactive red5 personal
+    aws-rotate-key red5 personal
+    aws-delete-inactive mstone bigstripe
+    aws-rotate-key mstone bigstripe
+}
