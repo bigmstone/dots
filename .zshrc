@@ -30,6 +30,7 @@ export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export VISUAL=vim
 export EDITOR=vim
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
+export ET_NO_TELEMETRY=1
 
 # Load aliases
 source $HOME/.aliases
