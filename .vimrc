@@ -33,7 +33,6 @@ Plug 'ziglang/zig.vim'
 Plug 'liuchengxu/graphviz.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'mg979/vim-visual-multi'
 call plug#end()
 
 " General Stuffs
