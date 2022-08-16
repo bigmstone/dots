@@ -31,6 +31,8 @@ export VISUAL=vim
 export EDITOR=vim
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 export ET_NO_TELEMETRY=1
+export AWS_SDK_LOAD_CONFIG=1
+export AWS_VAULT_KEYCHAIN_NAME=login
 
 # Load aliases
 source $HOME/.aliases
