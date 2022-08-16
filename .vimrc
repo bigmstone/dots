@@ -33,6 +33,7 @@ Plug 'ziglang/zig.vim'
 Plug 'liuchengxu/graphviz.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Plug 'mg979/vim-visual-multi'
 call plug#end()
 
 " General Stuffs
@@ -140,24 +141,31 @@ let g:virtualenv_directory = '.'
 let g:ale_sign_column_always = 1
 let g:ale_python_flake8_change_directory = 0
 let g:ale_python_pylint_change_directory = 0
-let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
-let g:ale_linters = {'js': ['stylelint', 'eslint']}
-let g:ale_linters = {'typescript': ['stylelint', 'tslint']}
-let g:ale_linters = {'ts': ['stylelint', 'tslint']}
-let g:ale_linters = {'tsx': ['stylelint', 'tslint']}
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_linters = {
+\   'jsx': ['stylelint', 'eslint'],
+\   'rust': ['analyzer'],
+\   'js': ['stylelint', 'eslint'],
+\   'typescript': ['stylelint', 'tslint'],
+\   'ts': ['stylelint', 'tslint'],
+\   'tsx': ['stylelint', 'tslint'],
+\   'javascript': ['prettier', 'eslint'],
+\}
 let g:ale_fix_on_save = 1
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_completion_enabled = 1
+nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
+let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'] }
 
-" YCM never works like I want it to
-let g:ycm_language_server =
-\ [
-\   {
-\     'name': 'rust',
-\     'cmdline': ['rust-analyzer'],
-\     'filetypes': ['rust'],
-\     'project_root_files': ['Cargo.toml']
-\   }
-\ ]
+" " YCM never works like I want it to
+" let g:ycm_language_server =
+" \ [
+" \   {
+" \     'name': 'rust',
+" \     'cmdline': ['rust-analyzer'],
+" \     'filetypes': ['rust'],
+" \     'project_root_files': ['Cargo.toml']
+" \   }
+" \ ]
 
 " Status Line
 set statusline+=%#warningmsg#
@@ -205,13 +213,6 @@ autocmd FileType rust setlocal colorcolumn=100
 autocmd FileType rust nmap gs <Plug>(rust-def-split)
 autocmd FileType rust nmap gx <Plug>(rust-def-vertical)
 let g:rustfmt_autosave = 1
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-        \ 'whitelist': ['rust'],
-        \ })
-endif 
 
 " Spell Bad because I spell bad....
 hi clear SpellBad

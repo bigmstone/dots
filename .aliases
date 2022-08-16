@@ -216,12 +216,23 @@ function aws-rotate-key {
 
     echo "Acquired new key and written to credentials file. Ready to deactivate old key? Press any key to continue..."; read -k1 -s
 
+    aws --profile $PROFILE sts get-session-token
+    echo "aws --profile $PROFILE iam update-access-key --access-key-id $CURRENT_KEY --status Inactive --user-name $USER_NAME"
     aws --profile $PROFILE iam update-access-key --access-key-id $CURRENT_KEY --status Inactive --user-name $USER_NAME
+
     echo "Done..."
 }
 
 function aws-delete-inactive {
-    echo "I need to build this"; read -k1 -s
+    USER_NAME=${1:-matthew_stone}
+    PROFILE=${2:-default}
+
+    KEYS=`aws --profile $PROFILE iam list-access-keys --user-name $USER_NAME | jq -rc '.AccessKeyMetadata | .[] | select(.Status=="Inactive") | .AccessKeyId'`
+    for KEY in $KEYS
+    do
+        echo "Really delete $KEY?"; read -k1 -s
+        aws --profile $PROFILE iam delete-access-key --user-name $USER_NAME --access-key-id $KEY
+    done
 }
 
 function aws-rotate-all-keys {
