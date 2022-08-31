@@ -95,6 +95,7 @@ set conceallevel=0
 
 let g:user_emmet_leader_key='<C-Z>'
 
+
 " Tagbar
 autocmd VimEnter * Tagbar
 
@@ -116,10 +117,14 @@ let g:goyo_width=100
 
 " NERDTree
 let NERDTreeQuitOnOpen = 1
-map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <c-n> :NERDTreeToggle<CR>
+" nnoremap <silent> <leader>n :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Multi Cursor Mapping
+" Visual mutli
+let g:VM_maps = {}
+let g:VM_maps["Find Under"] = '<c-d>'   " new cursor down
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_next_key='<C-s>'
 let g:multi_cursor_prev_key='<C-p>'
