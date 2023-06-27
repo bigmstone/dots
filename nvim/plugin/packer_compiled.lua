@@ -118,6 +118,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/tagbar",
     url = "https://github.com/majutsushi/tagbar"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   }
 }
 

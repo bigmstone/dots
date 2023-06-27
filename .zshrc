@@ -4,6 +4,8 @@
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -48,6 +50,9 @@ export PATH=~/Library/Python/3.6/bin:$PATH
 # RUST or BUST...or something.
 source $HOME/.cargo/env
 
+# Antigen
+source $HOME/antigen.zsh
+
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`
 [[ -f /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /usr/local/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
@@ -57,7 +62,6 @@ source $HOME/.cargo/env
 
 
 eval "$(pyenv init -)"
-
 
 autoload -U compinit; compinit
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}

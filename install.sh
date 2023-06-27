@@ -88,6 +88,10 @@ function setup_python {
     pyenv global 3.10.0
 }
 
+function setup_zsh {
+    curl -L git.io/antigen > ~/antigen.zsh
+}
+
 function main {
     install_osx
     install_zsh
@@ -96,6 +100,7 @@ function main {
     setup_python
     link_dots
     setup_vim
+    setup_zsh
 }
 
 main $@
