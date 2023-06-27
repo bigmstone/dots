@@ -69,8 +69,8 @@ function link_dots {
 }
 
 function setup_vim {
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    vim +PlugInstall +qall
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+    nvim +PackerSync +qall
 }
 
 function setup_git {
