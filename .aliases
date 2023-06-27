@@ -80,7 +80,7 @@ attachdev () {
 
 compdef "_files -W $DEV" attachdev
 
-alias vi=vim
+alias vi=nvim
 
 venv () {
     SDIR=`pwd`

@@ -12,6 +12,7 @@ fi
 
 # Customize to your needs...
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:$HOME/dev/arcanist/bin"
@@ -27,8 +28,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/java/bin:$PATH"
 export GOPATH=$HOME/dev/go
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
-export VISUAL=vim
-export EDITOR=vim
+export VISUAL=nvim
+export EDITOR=nvim
 export XML_CATALOG_FILES="/usr/local/etc/xml/catalog"
 export ET_NO_TELEMETRY=1
 export AWS_SDK_LOAD_CONFIG=1
@@ -57,6 +58,6 @@ source $HOME/.cargo/env
 
 eval "$(pyenv init -)"
 
-export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
 
 autoload -U compinit; compinit
+function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}

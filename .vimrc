@@ -2,6 +2,7 @@ set nocompatible
 filetype off
 
 call plug#begin()
+Plug 'puremourning/vimspector'
 Plug 'vim-scripts/mru.vim'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-expand-region'
@@ -14,7 +15,6 @@ Plug 'w0rp/ale'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
-Plug 'danilo-augusto/vim-afterglow'
 Plug 'wincent/Command-T'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -33,14 +33,25 @@ Plug 'ziglang/zig.vim'
 Plug 'liuchengxu/graphviz.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'mg979/vim-visual-multi'
-Plug 'tpope/vim-dadbod'
+" Plug 'mg979/vim-visual-multi'
+
+" Themes
+" Plug 'danilo-augusto/vim-afterglow'
+" Plug 'phanviet/vim-monokai-pro'
+Plug 'loctvl842/monokai-pro.nvim'
 call plug#end()
+
+let g:CommandTPreferredImplementation='lua'
+
+
+" colorscheme monokai-pro
+" silent! colorscheme ristretto
+
 
 " General Stuffs
 set shell=/bin/bash
 set mouse=a
-set ttymouse=sgr
+" set ttymouse=sgr
 set clipboard=unnamed
 set number
 set background=dark
@@ -84,7 +95,6 @@ set incsearch
 set spell
 set spelllang=en_us
 syntax on
-silent! colorscheme gruvbox
 hi Normal ctermbg=none
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
@@ -161,6 +171,7 @@ set completeopt=menu,menuone,preview,noselect,noinsert
 let g:ale_completion_enabled = 1
 nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
 let g:ale_fixers = { 'rust': ['rustfmt', 'trim_whitespace', 'remove_trailing_lines'] }
+let g:ale_virtualtext_cursor = 'disabled'
 
 " " YCM never works like I want it to
 " let g:ycm_language_server =
@@ -223,3 +234,28 @@ let g:rustfmt_autosave = 1
 " Spell Bad because I spell bad....
 hi clear SpellBad
 hi SpellBad cterm=underline
+
+" Keep my spot when I swap buffers
+function! AutoSaveWinView()
+    if !exists("w:SavedBufView")
+        let w:SavedBufView = {}
+    endif
+    let w:SavedBufView[bufnr("%")] = winsaveview()
+endfunction
+
+function! AutoRestoreWinView()
+    let buf = bufnr("%")
+    if exists("w:SavedBufView") && has_key(w:SavedBufView, buf)
+        let v = winsaveview()
+        let atStartOfFile = v.lnum == 1 && v.col == 0
+        if atStartOfFile && !&diff
+            call winrestview(w:SavedBufView[buf])
+        endif
+        unlet w:SavedBufView[buf]
+    endif
+endfunction
+
+if v:version >= 700
+    autocmd BufLeave * call AutoSaveWinView()
+    autocmd BufEnter * call AutoRestoreWinView()
+endif
