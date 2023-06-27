@@ -1,0 +1,13 @@
+device = 'XK68JS'
+
+[[mappings]]
+key = 0
+script = 'PlayMusic.lua'
+
+[[mappings]]
+key = 8
+script = 'StopMusic.lua'
+
+[[mappings]]
+key = 16
+script = 'NextSong.lua'
