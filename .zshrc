@@ -52,6 +52,8 @@ source $HOME/.cargo/env
 
 # Antigen
 source $HOME/antigen.zsh
+antigen bundle Aloxaf/fzf-tab
+antigen apply
 
 # tabtab source for serverless package
 # uninstall by removing these lines or running `tabtab uninstall serverless`

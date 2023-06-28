@@ -1,4 +1,2 @@
-YCM Depends:
-cmake
-gcc-c++
-python-devel
+# My Dots
+I donno...my dots files.
