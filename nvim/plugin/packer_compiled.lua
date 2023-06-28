@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
+  mru = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/mru",
+    url = "https://github.com/yegappan/mru"
+  },
   ["nvim-tree.lua"] = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
@@ -118,6 +123,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/tagbar",
     url = "https://github.com/majutsushi/tagbar"
+  },
+  ["vim-commentary"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-commentary",
+    url = "https://github.com/tpope/vim-commentary"
   },
   ["vim-fugitive"] = {
     loaded = true,

@@ -1,17 +1,15 @@
 return require('packer').startup(function(use)
     -- Base
-    use 'wbthomason/packer.nvim'
-    use 'nvim-tree/nvim-web-devicons'
     use {
         'nvim-tree/nvim-tree.lua',
         requires = { 'nvim-tree/nvim-web-devicons' },
     }
-    use 'neoclide/coc.nvim'
+    use 'wbthomason/packer.nvim'
+    use 'nvim-tree/nvim-web-devicons'
+    use {'neoclide/coc.nvim', branch = 'release'}
     use 'majutsushi/tagbar'
-    -- use 'w0rp/ale'
-    -- use 'vim-airline/vim-airline'
-
-    -- Helpers
+    use 'tpope/vim-commentary'
+    use 'yegappan/mru'
     use 'junegunn/fzf'
     use 'junegunn/fzf.vim'
     use 'lukas-reineke/indent-blankline.nvim'
