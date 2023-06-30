@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
+  ["monokai-pro.nvim"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/monokai-pro.nvim",
+    url = "https://github.com/loctvl842/monokai-pro.nvim"
+  },
   mru = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/mru",

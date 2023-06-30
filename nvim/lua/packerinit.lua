@@ -33,6 +33,6 @@ return require('packer').startup(function(use)
     -- use 'liuchengxu/graphviz.vim'
 
     -- Colors
-    -- use 'loctvl842/monokai-pro.nvim'
+    use 'loctvl842/monokai-pro.nvim'
     -- use 'morhetz/gruvbox'
 end)
