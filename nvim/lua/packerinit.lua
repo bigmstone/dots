@@ -1,5 +1,20 @@
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+
+local packer_bootstrap = ensure_packer()
+
 return require('packer').startup(function(use)
-    -- Base
+    ----------
+    -- Base --
+    ----------
     use {
         'nvim-tree/nvim-tree.lua',
         requires = { 'nvim-tree/nvim-web-devicons' },
@@ -14,25 +29,26 @@ return require('packer').startup(function(use)
     use 'junegunn/fzf.vim'
     use 'lukas-reineke/indent-blankline.nvim'
     use 'tpope/vim-fugitive'
-    -- use 'wincent/Command-T'
-    -- use 'tpope/vim-repeat'
-    -- use 'tpope/vim-surround'
-    -- use 'airblade/vim-gitgutter'
-    -- use 'tmhedberg/matchit'
-    -- use 'junegunn/goyo.vim'
-    -- use 'junegunn/limelight.vim'
-    -- use 'dominikduda/vim_current_word'
-    -- use 'mg979/vim-visual-multi'
+    use 'rrethy/vim-illuminate'
+    use 'junegunn/goyo.vim'
 
-    -- Language Specific
+    -----------------------
+    -- Language Specific --
+    -----------------------
     use 'rust-lang/rust.vim'
-    -- use 'moll/vim-node'
-    -- use 'elzr/vim-json'
-    -- use 'tikhomirov/vim-glsl'
-    -- use 'ziglang/zig.vim'
-    -- use 'liuchengxu/graphviz.vim'
+    use 'ziglang/zig.vim'
+    use 'tikhomirov/vim-glsl'
 
-    -- Colors
+    ------------
+    -- Colors --
+    ------------
     use 'loctvl842/monokai-pro.nvim'
-    -- use 'morhetz/gruvbox'
+
+
+    ---------------
+    -- Bootstrap --
+    ---------------
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)

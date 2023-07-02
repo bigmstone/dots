@@ -10,18 +10,10 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-"set spell
-"set spelllang=en_us
-
-
 autocmd VimEnter * Tagbar
 ]])
 
--- Set lua mode for Command T
-vim.cmd("let g:CommandTPreferredImplementation='lua'")
-
 vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
-
 
 vim.cmd([[
 let g:user_emmet_leader_key='<C-Z>'
@@ -48,7 +40,6 @@ vim.keymap.set("n", "gd", "<Plug>(coc-definition)", {silent = true})
 vim.keymap.set("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
 vim.keymap.set("n", "gi", "<Plug>(coc-implementation)", {silent = true})
 vim.keymap.set("n", "gr", "<Plug>(coc-references)", {silent = true})
-
 
 ---------------------
 -- Some MRU Things --

@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/fzf.vim",
     url = "https://github.com/junegunn/fzf.vim"
   },
+  ["goyo.vim"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/goyo.vim",
+    url = "https://github.com/junegunn/goyo.vim"
+  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
@@ -138,6 +143,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
+  },
+  ["vim-glsl"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-glsl",
+    url = "https://github.com/tikhomirov/vim-glsl"
+  },
+  ["vim-illuminate"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-illuminate",
+    url = "https://github.com/rrethy/vim-illuminate"
+  },
+  ["zig.vim"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/zig.vim",
+    url = "https://github.com/ziglang/zig.vim"
   }
 }
 

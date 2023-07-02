@@ -6,7 +6,7 @@ auto_view text/html
 alternative_order text/plain text/enriched text/html
 set sort=threads
 
-set editor              = "vim +/^$ ++1 -c 'set filetype=mail textwidth=0 noautoindent'"
+set editor              = "nvim +/^$ ++1 -c 'set filetype=mail textwidth=0 noautoindent'"
 
 set pager_index_lines   = 10    # number of index lines to show
 set pager_context       = 3     # number of context lines to show
