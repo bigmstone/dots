@@ -13,4 +13,6 @@ require("nvim-tree").setup({
         },
     },
 })
+require('lualine').setup({ options = { theme = 'ayu' } })
 require('illuminate').configure({})
+require('barbar').setup({})

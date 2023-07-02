@@ -43,14 +43,22 @@ compdef "_files -W $DEV" workin
 workgo () { cd "$DEV/go/src/$@"; }
 lsdev () { echo "$(ls $DEV)"; }
 mkdev () {  mkdir "$DEV/$@"; workin "$@"; }
+mkw () { mkdev $@; workdev $@ }
+ndev () {
+    mkdev $@
+    git init $DEV/$@
+    workdev $@
+}
 
-gic () { echo "Making dev directory: $2";
-         mkdev $2;
-         cd "$DEV/$2";
-         git init;
-         git remote add origin $1;
-         git fetch;
-         git checkout -t origin/master }
+gic () {
+    echo "Making dev directory: $2";
+    mkdev $2;
+    cd "$DEV/$2";
+    git init;
+    git remote add origin $1;
+    git fetch;
+    git checkout -t origin/master || git checkout -t origin/main
+}
 
 ssh-remote-add () { cat ~/.ssh/id_ed25519.pub  | ssh "$@" 'cat > .tmp.pubkey; mkdir -p ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' }
 

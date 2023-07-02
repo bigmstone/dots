@@ -15,11 +15,8 @@ return require('packer').startup(function(use)
     ----------
     -- Base --
     ----------
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = { 'nvim-tree/nvim-web-devicons' },
-    }
     use 'wbthomason/packer.nvim'
+    use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons' } }
     use 'nvim-tree/nvim-web-devicons'
     use {'neoclide/coc.nvim', branch = 'release'}
     use 'majutsushi/tagbar'
@@ -31,6 +28,8 @@ return require('packer').startup(function(use)
     use 'tpope/vim-fugitive'
     use 'rrethy/vim-illuminate'
     use 'junegunn/goyo.vim'
+    use 'nvim-lualine/lualine.nvim'
+    use 'romgrk/barbar.nvim'
 
     -----------------------
     -- Language Specific --
@@ -42,7 +41,8 @@ return require('packer').startup(function(use)
     ------------
     -- Colors --
     ------------
-    use 'loctvl842/monokai-pro.nvim'
+    use 'Shatur/neovim-ayu'
+    -- use 'loctvl842/monokai-pro.nvim'
 
 
     ---------------

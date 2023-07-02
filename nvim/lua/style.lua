@@ -7,5 +7,5 @@ set showmatch
 set colorcolumn=80
 ]])
 
-require("monokai-pro").setup({})
-vim.cmd([[colorscheme monokai-pro-ristretto]])
+require('ayu').setup({ mirage = true })
+require('ayu').colorscheme()

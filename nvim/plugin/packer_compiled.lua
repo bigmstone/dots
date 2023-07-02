@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["barbar.nvim"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/barbar.nvim",
+    url = "https://github.com/romgrk/barbar.nvim"
+  },
   ["coc.nvim"] = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/coc.nvim",
@@ -99,15 +104,20 @@ _G.packer_plugins = {
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
-  ["monokai-pro.nvim"] = {
+  ["lualine.nvim"] = {
     loaded = true,
-    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/monokai-pro.nvim",
-    url = "https://github.com/loctvl842/monokai-pro.nvim"
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   mru = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/mru",
     url = "https://github.com/yegappan/mru"
+  },
+  ["neovim-ayu"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/neovim-ayu",
+    url = "https://github.com/Shatur/neovim-ayu"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
