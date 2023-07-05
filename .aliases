@@ -67,6 +67,8 @@ alias catmd="pandoc -f markdown -t plain"
 workdev () {
     if [ -z "$@" ]; then
         tmux new-session -d
+    elif [ -d "$1" ]; then
+        tmux new-session -d -s "Obsidian" -c "$1"
     else
         dir="$DEV/$1";
         tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"
@@ -76,6 +78,10 @@ workdev () {
     tmux split-window -v -c "$dir"
     tmux select-window -n
     tmux -2 attach-session -d
+}
+
+obsi () {
+    workdev ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Main
 }
 
 compdef "_files -W $DEV" workdev

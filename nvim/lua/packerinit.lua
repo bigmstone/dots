@@ -37,13 +37,13 @@ return require('packer').startup(function(use)
     use 'rust-lang/rust.vim'
     use 'ziglang/zig.vim'
     use 'tikhomirov/vim-glsl'
+    use 'preservim/vim-markdown'
+    use 'dhruvasagar/vim-table-mode'
 
     ------------
     -- Colors --
     ------------
     use 'Shatur/neovim-ayu'
-    -- use 'loctvl842/monokai-pro.nvim'
-
 
     ---------------
     -- Bootstrap --

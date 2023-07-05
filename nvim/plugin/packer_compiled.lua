@@ -164,6 +164,16 @@ _G.packer_plugins = {
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/rrethy/vim-illuminate"
   },
+  ["vim-markdown"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-markdown",
+    url = "https://github.com/preservim/vim-markdown"
+  },
+  ["vim-table-mode"] = {
+    loaded = true,
+    path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/vim-table-mode",
+    url = "https://github.com/dhruvasagar/vim-table-mode"
+  },
   ["zig.vim"] = {
     loaded = true,
     path = "/Users/mstone/.local/share/nvim/site/pack/packer/start/zig.vim",
