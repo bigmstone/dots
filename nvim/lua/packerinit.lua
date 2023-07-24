@@ -45,6 +45,11 @@ return require('packer').startup(function(use)
     ------------
     use 'Shatur/neovim-ayu'
 
+    ------------------
+    -- Experimental --
+    ------------------
+    use 'github/copilot.vim'
+
     ---------------
     -- Bootstrap --
     ---------------

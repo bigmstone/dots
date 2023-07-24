@@ -25,6 +25,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/dev/bin:$PATH"
 export PATH="$HOME/.pyenv/shims:$PATH"
 export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/.bun/bin:$PATH"
 # export PATH="$(brew --prefix)/bin:${PATH}"
 export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/opt/homebrew/opt/java/bin:$PATH"
@@ -67,3 +68,10 @@ eval "$(pyenv init -)"
 
 autoload -U compinit; compinit
 function gi() { curl -sLw "\n" https://www.toptal.com/developers/gitignore/api/$@ ;}
+
+# bun completions
+[ -s "/Users/mstone/.bun/_bun" ] && source "/Users/mstone/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
