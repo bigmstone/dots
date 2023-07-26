@@ -1,5 +1,6 @@
 vim.cmd([[
     set noerrorbells
+    set clipboard=unnamedplus
     set scrolloff=3
     set backspace=2
     set textwidth=80
