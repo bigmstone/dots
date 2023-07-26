@@ -22,8 +22,7 @@ return require('packer').startup(function(use)
     use 'majutsushi/tagbar'
     use 'tpope/vim-commentary'
     use 'yegappan/mru'
-    use 'junegunn/fzf'
-    use 'junegunn/fzf.vim'
+    use { 'nvim-telescope/telescope.nvim', tag = '0.1.2', requires = { 'nvim-lua/plenary.nvim' } }
     use 'lukas-reineke/indent-blankline.nvim'
     use 'tpope/vim-fugitive'
     use 'rrethy/vim-illuminate'

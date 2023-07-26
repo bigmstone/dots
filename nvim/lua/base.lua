@@ -22,9 +22,14 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, si
 
 vim.cmd([[
     let g:user_emmet_leader_key='<C-Z>'
-    " fzf Map
-    map ; :Rg<CR>
 ]])
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', ';', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 ---------------------
 -- Some CoC Things --
