@@ -48,6 +48,17 @@ return require('packer').startup(function(use)
     -- Experimental --
     ------------------
     use 'github/copilot.vim'
+    use({
+        "jackMort/ChatGPT.nvim",
+        config = function()
+            require("chatgpt").setup()
+        end,
+        requires = {
+          "MunifTanjim/nui.nvim",
+          "nvim-lua/plenary.nvim",
+          "nvim-telescope/telescope.nvim"
+        }
+})
 
     ---------------
     -- Bootstrap --

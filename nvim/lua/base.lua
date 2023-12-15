@@ -14,16 +14,11 @@ vim.cmd([[
     autocmd VimEnter * Tagbar
 ]])
 
-vim.cmd([[
-    let g:vim_markdown_folding_disabled = 1
-    let g:table_mode_corner='|'
-]])
-
+vim.g.vim_markdown_folding_disabled = 1
+vim.g.table_mode_corner = '|'
 vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
-
-vim.cmd([[
-    let g:user_emmet_leader_key='<C-Z>'
-]])
+vim.g.user_emmet_leader_key='<C-Z>'
+vim.g.rustfmt_autosave = 1
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', ';', builtin.live_grep, {})

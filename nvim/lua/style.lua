@@ -1,12 +1,11 @@
-vim.cmd([[
-set cursorline
-set number
-set background=dark
-set title
-set showmatch
-set textwidth=80
-set colorcolumn=+0
-]])
+vim.wo.relativenumber = true
+vim.wo.number = true
+vim.wo.cursorline = true
+vim.wo.colorcolumn = '+0'
+vim.o.textwidth = 80
+vim.o.showmatch = true
+vim.o.title = true
+vim.o.background = 'dark'
 
 require('ayu').setup({ mirage = true })
 require('ayu').colorscheme()
