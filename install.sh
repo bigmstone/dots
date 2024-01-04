@@ -47,10 +47,10 @@ function install_dnf {
 
 function install_zsh {
     git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-    /usr/bin/env zsh -c 'setopt EXTENDED_GLOB\
-        for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do \
-            ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}" \
-        done'
+    /usr/bin/env zsh -c 'setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done'
 
     chsh -s $(which zsh)
 }
