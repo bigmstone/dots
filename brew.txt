@@ -1,4 +1,4 @@
-vim
+neovim
 tmux
 universal-ctags
 fzf
@@ -28,8 +28,8 @@ pyenv
 git
 tig
 git-lfs
+lima
 
 protobuf
 zeromq
-podman
 sqlite

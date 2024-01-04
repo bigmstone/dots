@@ -15,7 +15,6 @@ function install_rust {
 function install_osx {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
-  xargs brew install < /tmp/brew.txt
   brew tap homebrew/cask-fonts
   brew install --cask font-caskaydia-cove-nerd-font
   brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
@@ -57,6 +56,8 @@ function install_zsh {
 }
 
 function link_dots {
+    ln -sf $DOTSDIR/vim ~/.config/nvim
+    ln -sf $DOTSDIR/kitty ~/.config/kitty
     ln -sf $DOTSDIR/.aliases ~/
     ln -sf $DOTSDIR/.aliases.fish ~/
     ln -sf $DOTSDIR/exports.fish ~/.config/fish/conf.d/
@@ -69,8 +70,7 @@ function link_dots {
 }
 
 function setup_vim {
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim --headless "+Lazy! sync" +qa
 }
 
 function setup_git {
@@ -84,8 +84,8 @@ function setup_git {
 }
 
 function setup_python {
-    pyenv install 3.10.0
-    pyenv global 3.10.0
+    pyenv install 3
+    pyenv global 3
 }
 
 function setup_zsh {
