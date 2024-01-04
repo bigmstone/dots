@@ -56,7 +56,7 @@ done'
 }
 
 function link_dots {
-    ln -sf $DOTSDIR/vim ~/.config/nvim
+    ln -sf $DOTSDIR/nvim ~/.config/nvim
     ln -sf $DOTSDIR/kitty ~/.config/kitty
     ln -sf $DOTSDIR/.aliases ~/
     ln -sf $DOTSDIR/.aliases.fish ~/

@@ -15,6 +15,7 @@ nmap
 reattach-to-user-namespace
 jq
 gawk
+btop
 
 lua
 zig
