@@ -15,9 +15,9 @@ function install_rust {
 function install_osx {
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
   curl -o /tmp/brew.txt ${BREW_FILE_URL}
-  /opt/homebriew/bin/brew tap homebrew/cask-fonts
-  /opt/homebriew/bin/brew install --cask font-caskaydia-cove-nerd-font
-  /opt/homebriew/bin/brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  /opt/homebrew/bin/brew tap homebrew/cask-fonts
+  /opt/homebrew/bin/brew install --cask font-caskaydia-cove-nerd-font
+  /opt/homebrew/bin/brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
 }
 
 function install_linux {
