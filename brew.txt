@@ -2,6 +2,7 @@ neovim
 tmux
 universal-ctags
 fzf
+mcfly
 
 curl
 ffmpeg
