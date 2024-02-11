@@ -255,3 +255,5 @@ function aws-rotate-all-keys {
     aws-delete-inactive mstone bigstripe
     aws-rotate-key mstone bigstripe
 }
+
+alias docker="lima nerdctl"

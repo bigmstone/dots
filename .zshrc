@@ -98,4 +98,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-eval "$(mcfly init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
