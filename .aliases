@@ -256,4 +256,71 @@ function aws-rotate-all-keys {
     aws-rotate-key mstone bigstripe
 }
 
+function git_report {
+    # Usage: git_report 2023-01-01 2023-12-31
+    echo "Date,User,Commits,Lines of Code"
+
+    git log --pretty="%an|%ad" --shortstat --date=short --since="$1" --until="$2" | \
+    awk '
+        /^ / {
+            added+=$4;
+            deleted+=$6;
+            loc=added+deleted
+        }
+        !/^ / && NF == 2 { 
+            if (user && date) print date "," user "," commits "," loc; 
+            split($0, parts, "|")
+            user=parts[1];
+            date=parts[2];
+            commits=0;
+            loc=0;
+            added=0;
+            deleted=0;
+        }
+        /^ / { commits++ }
+        END { if (user && date) print date "," user "," commits "," loc }
+    '
+}
+
+function append-creation-date {
+    local force=0
+
+    # Check if the '-f' option is provided
+    if [[ "$1" == "-f" ]]; then
+        force=1
+        shift # Remove the first argument, processing the rest as filenames
+    fi
+
+    local dir="$1" # The directory to process files in
+
+    # Navigate to the directory
+    cd "$dir" || return
+
+    # Iterate over each file in the directory
+    for file in *; do
+        # Check if the file is a regular file
+        if [ -f "$file" ]; then
+            # Get the file's creation date on macOS, adjust for Linux if necessary
+            local creationDate=$(stat -f "%SB" -t "%y-%m-%d" "$file")
+
+            # Check if the filename already starts with a date in the format YY-MM-DD
+            if ! [[ $file =~ ^[0-9]{2}-[0-9]{2}-[0-9]{2} ]]; then
+                local newFileName="${creationDate} $file"
+
+                if [ $force -eq 0 ]; then
+                    # Prompt the user for confirmation if not in force mode
+                    echo "Renaming $file to $newFileName, proceed? y/N"
+                    read response
+                    if [[ $response =~ ^[Yy]$ ]]; then
+                        mv "$file" "$newFileName"
+                    fi
+                else
+                    # Rename the file without prompting
+                    mv "$file" "$newFileName"
+                fi
+            fi
+        fi
+    done
+}
+
 alias docker="lima nerdctl"
