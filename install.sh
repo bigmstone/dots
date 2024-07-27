@@ -30,6 +30,7 @@ function install_linux {
     LinuxMint) install_apt ;;
     Ubuntu)    install_apt ;;
     Fedora)    install_dnf ;;
+    Arch)      install_pacman;;
     *)          echo "Unsupported Distro" ;;
   esac
 }
@@ -43,6 +44,11 @@ function install_dnf {
   echo "Installing with DNF"
   sudo dnf copr enable thindil/universal-ctags
   sudo dnf install util-linux-user vim gvim universal-ctags golang git tmux cmake sqlite-devel bzip2-devel readline-devel openssl-devel zlib-devel make gcc links
+}
+
+function install_pacman {
+  echo "Installing with Pacman"
+  sudo pacman -S ctags golang git tmux cmake sqlite make gcc links
 }
 
 function install_zsh {
@@ -93,11 +99,11 @@ function setup_zsh {
 }
 
 function main {
-    install_osx
+    install_linux
     install_zsh
     setup_git
     install_rust
-    setup_python
+    # setup_python
     link_dots
     setup_vim
     setup_zsh
