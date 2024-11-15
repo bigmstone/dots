@@ -42,7 +42,7 @@ compdef "_files -W $DEV" workin
 
 workgo () { cd "$DEV/go/src/$@"; }
 lsdev () { echo "$(ls $DEV)"; }
-mkdev () {  mkdir "$DEV/$@"; workin "$@"; }
+mkdev () {  mkdir "$DEV/$@"; workdev "$@"; }
 mkw () { mkdev $@; workdev $@ }
 ndev () {
     mkdev $@
@@ -53,7 +53,6 @@ ndev () {
 gic () {
     echo "Making dev directory: $2";
     mkdev $2;
-    cd "$DEV/$2";
     git init;
     git remote add origin $1;
     git fetch;
@@ -66,9 +65,8 @@ alias catmd="pandoc -f markdown -t plain"
 
 workdev () {
     if [ -z "$@" ]; then
-        tmux new-session -d
-    elif [ -d "$1" ]; then
-        tmux new-session -d -s "Obsidian" -c "$1"
+        echo "Include a dev directory"
+        return
     else
         dir="$DEV/$1";
         tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"

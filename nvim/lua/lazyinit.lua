@@ -21,7 +21,7 @@ local plugins = {
     'majutsushi/tagbar',
     'tpope/vim-commentary',
     'yegappan/mru',
-    { 'nvim-telescope/telescope.nvim', version = '0.1.2', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
     'lukas-reineke/indent-blankline.nvim',
     'tpope/vim-fugitive',
     'rrethy/vim-illuminate',
@@ -37,6 +37,25 @@ local plugins = {
     'tikhomirov/vim-glsl',
     'preservim/vim-markdown',
     'dhruvasagar/vim-table-mode',
+    { 'monkoose/nvlime', dependencies = { 'monkoose/parsley' } },
+    'gpanders/nvim-parinfer',
+    {
+      "nvim-treesitter/nvim-treesitter",
+      build = function(_)
+        vim.cmd("TSUpdate")
+      end,
+    },
+    {
+      "https://github.com/apple/pkl-neovim",
+      lazy = true,
+      event = "BufReadPre *.pkl",
+      dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+      },
+      build = function()
+        vim.cmd("TSInstall! pkl")
+      end,
+    },
 
     ------------
     -- Colors --
@@ -46,7 +65,6 @@ local plugins = {
     ------------------
     -- Experimental --
     ------------------
-    'github/copilot.vim',
     'MunifTanjim/nui.nvim',
     {
         "Bryley/neoai.nvim",

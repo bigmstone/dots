@@ -18,6 +18,7 @@ function install_osx {
   /opt/homebrew/bin/brew tap homebrew/cask-fonts
   /opt/homebrew/bin/brew install --cask font-caskaydia-cove-nerd-font
   /opt/homebrew/bin/brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
+  $(brew --prefix)/opt/fzf/install
 }
 
 function install_linux {
