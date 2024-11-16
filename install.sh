@@ -19,6 +19,7 @@ function install_osx {
   /opt/homebrew/bin/brew install --cask font-caskaydia-cove-nerd-font
   /opt/homebrew/bin/brew install `cat /tmp/brew.txt | sed ':a;N;$!ba;s/\n/ /g'`
   $(brew --prefix)/opt/fzf/install
+  setup_kitty
 }
 
 function install_linux {
@@ -78,6 +79,11 @@ function link_dots {
 
 function setup_vim {
     nvim --headless "+Lazy! sync" +qa
+}
+
+function setup_kitty {
+    brew install --cask kitty
+    git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
 }
 
 function setup_git {
