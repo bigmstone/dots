@@ -100,7 +100,7 @@ function setup_zsh {
 }
 
 function main {
-    install_linux
+    install_osx
     install_zsh
     setup_git
     install_rust
