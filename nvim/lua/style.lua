@@ -1,4 +1,4 @@
-vim.wo.relativenumber = true
+-- vim.wo.relativenumber = true
 vim.wo.number = true
 vim.wo.cursorline = true
 vim.wo.colorcolumn = '+0'
@@ -7,5 +7,4 @@ vim.o.showmatch = true
 vim.o.title = true
 vim.o.background = 'dark'
 
-require('ayu').setup({ mirage = true })
-require('ayu').colorscheme()
+vim.cmd[[colorscheme tokyonight-storm]]

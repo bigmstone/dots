@@ -1,5 +1,5 @@
 neovim
-tmux
+zellij
 universal-ctags
 fzf
 

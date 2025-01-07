@@ -63,20 +63,36 @@ ssh-remote-add () { cat ~/.ssh/id_ed25519.pub  | ssh "$@" 'cat > .tmp.pubkey; mk
 
 alias catmd="pandoc -f markdown -t plain"
 
+# workdev () {
+#     if [ -z "$@" ]; then
+#         echo "Include a dev directory"
+#         return
+#     else
+#         dir="$DEV/$1";
+#         tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"
+#     fi
+#     tmux rename-window "Dev"
+#     tmux new-window -n "Test" -c "$dir"
+#     tmux split-window -v -c "$dir"
+#     tmux select-window -n
+#     tmux -2 attach-session -d
+# }
+
 workdev () {
     if [ -z "$@" ]; then
         echo "Include a dev directory"
         return
     else
-        dir="$DEV/$1";
-        tmux new-session -d -s "$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')" -c "$dir"
+        dir="$DEV/$1"
+        session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+        template="$HOME/.config/zellij/dev.kbl"
+        cd $dir
+
+        zellij -s "$session_name" -n $template
     fi
-    tmux rename-window "Dev"
-    tmux new-window -n "Test" -c "$dir"
-    tmux split-window -v -c "$dir"
-    tmux select-window -n
-    tmux -2 attach-session -d
 }
+
+
 
 obsi () {
     workdev ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Main

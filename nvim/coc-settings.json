@@ -1,5 +1,0 @@
-{
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "diagnostic.checkCurrentLine": true,
-    "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "typescript", "typescriptreact"]
-}

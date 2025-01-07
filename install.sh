@@ -64,6 +64,9 @@ done'
 }
 
 function link_dots {
+    mkdir ~/.config/zellij
+    ln -sf $DOTSDIR/zellij/config.kbl ~/.config/zellij/config.kbl
+    ln -sf $DOTSDIR/zellij/dev.kbl ~/.config/zellij/dev.kbl
     ln -sf $DOTSDIR/nvim ~/.config/nvim
     ln -sf $DOTSDIR/kitty ~/.config/kitty
     ln -sf $DOTSDIR/.aliases ~/
