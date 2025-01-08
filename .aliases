@@ -85,6 +85,15 @@ workdev () {
     else
         dir="$DEV/$1"
         session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+
+        sessions=$(zellij list-sessions -s)
+        for session (${(f)sessions}); do
+          if [[ $session == $session_name ]]; then
+              zellij attach $session_name
+              return 0
+          fi
+        done
+
         template="$HOME/.config/zellij/dev.kbl"
         cd $dir
 
