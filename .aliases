@@ -95,9 +95,10 @@ workdev () {
         done
 
         template="$HOME/.config/zellij/dev.kbl"
-        cd $dir
 
-        zellij -s "$session_name" -n $template
+        # cd $dir
+        # zellij -s "$session_name" -n $template
+        zellij options --default-cwd $dir --session-name $session_name --default-layout $template
     fi
 }
 
