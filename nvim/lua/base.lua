@@ -19,6 +19,7 @@ vim.g.table_mode_corner = '|'
 vim.api.nvim_set_keymap('n', '<C-n>', ':NvimTreeToggle<CR>', {noremap = true, silent = true})
 vim.g.user_emmet_leader_key='<C-Z>'
 vim.g.rustfmt_autosave = 1
+vim.o.signcolumn = "yes"
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', ';', builtin.live_grep, {})
