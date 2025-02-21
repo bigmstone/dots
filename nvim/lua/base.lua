@@ -31,6 +31,12 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>ac', "<cmd>NeoAIContext<cr>", {})
 
 
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
+    desc = "Go to definition",
+    silent = true,
+    noremap = true
+})
+
 ---------
 -- MRU --
 ---------

@@ -100,3 +100,7 @@ unset __conda_setup
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/mstone/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
