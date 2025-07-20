@@ -1,5 +1,5 @@
 require('lazyinit')
+require('setup-cmp')
 require('setup')
 require('base')
 require('style')
-require('setup-cmp');

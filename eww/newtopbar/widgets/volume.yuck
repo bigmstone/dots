@@ -1,0 +1,8 @@
+(defpoll VOLICON :interval "1s" `scripts/volume --icon`)
+(defpoll VOLUME :interval "1s" `scripts/volume --get`)
+
+(defwidget audio []
+  (box :class "info" :spacing 2
+    (button :onclick "scripts/volume --toggle"
+      (label :class "system-icon" :text VOLICON))
+    (label :text VOLUME)))

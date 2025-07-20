@@ -1,0 +1,3 @@
+#!/bin/bash
+# ~/.config/eww/scripts/get-window-title
+hyprctl activewindow -j | jq -r '.title' | cut -c1-30

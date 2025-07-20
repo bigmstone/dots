@@ -1,0 +1,3 @@
+#!/bin/bash
+# ~/.config/eww/scripts/get-workspaces
+hyprctl workspaces -j | jq -c 'map({id: .id, windows: .windows}) | sort_by(.id)'

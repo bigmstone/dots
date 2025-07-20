@@ -1,0 +1,15 @@
+;; Workspace variables (using hyprctl for Hyprland)
+(defpoll workspaces :interval "1s" :initial "[]" "scripts/get-workspaces")
+(defpoll current_workspace :interval "1s" :initial "1" "scripts/get-active-workspace")
+(defpoll window_title :interval "1s" :initial "" "scripts/get-window-title")
+
+;; Widget definitions
+(defwidget workspaces []
+  (box :class "workspaces" :style "/* current: ${current_workspace} */" :spacing 8
+    (for workspace in workspaces
+      (button
+        :class "workspace-btn"
+        :onclick "hyprctl dispatch workspace ${workspace.id}"
+        :tooltip "Workspace ${workspace.id} (current: ${current_workspace})"
+        (label :class "workspace-icon ${workspace.id == current_workspace ? "active" : workspace.windows > 0 ? "occupied" : ""}"
+               :text "")))))

@@ -1,0 +1,6 @@
+bartender
+fantastical
+font-0xproto-nerd-font
+font-caskaydia-cove-nerd-font
+ftdi-vcp-driver
+kitty

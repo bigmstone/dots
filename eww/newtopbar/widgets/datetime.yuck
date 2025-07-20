@@ -1,0 +1,10 @@
+(defpoll time :interval "1s" "date '+%H:%M:%S'")
+(defpoll date :interval "60s" "date '+%Y-%m-%d'")
+
+(defwidget clock []
+  (box :class "widget clock"
+    (label :text time)))
+
+(defwidget date-widget []
+  (box :class "widget"
+    (label :text date)))

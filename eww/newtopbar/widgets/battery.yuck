@@ -1,0 +1,6 @@
+(defpoll BATTERY :interval "10s" :initial "0" "cat /sys/class/power_supply/BAT*/capacity 2>/dev/null || echo '100'")
+
+(defwidget battery []
+  (box :class "info" :spacing 2
+    (label :class "system-icon" :text "${BATTERY < 10 ? "󰂃" : BATTERY < 25 ? "󰁺" : BATTERY < 50 ? "󰁾" : BATTERY < 75 ? "󰂀" : "󰁹"}")
+    (label :text "${BATTERY}%")))

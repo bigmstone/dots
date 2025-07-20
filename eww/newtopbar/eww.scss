@@ -1,0 +1,161 @@
+// EWW Styles - ~/.config/eww/eww.scss
+// This mirrors the CSS variables and styling from the HTML mockup
+
+* {
+    all: unset;
+}
+
+// Color Palette
+$bg-primary: #1e1e2e;
+$bg-secondary: #313244;
+$bg-hover: #45475a;
+$border-primary: #45475a;
+$border-hover: #585b70;
+$text-primary: #cdd6f4;
+$text-secondary: #a6adc8;
+$accent-blue: #89b4fa;
+$accent-green: #a6e3a1;
+$accent-yellow: #f9e2af;
+$accent-red: #f38ba8;
+
+// Spacing
+$spacing-xs: 6px;
+$spacing-sm: 8px;
+$spacing-md: 12px;
+$spacing-lg: 15px;
+$spacing-xl: 20px;
+
+// Sizes
+$bar-height: 40px;
+$border-radius: 8px;
+$workspace-size: 12px;
+$indicator-size: 8px;
+
+// Typography
+$font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$font-mono: 'Courier New', monospace;
+$font-icon: 'Font Awesome 6 Free', 'Font Awesome 6 Free Regular';
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-weight-normal: 500;
+$font-weight-bold: bold;
+
+// Main bar
+.widget-bar {
+    background-color: rgba(30, 30, 46, 0.95);
+    border-bottom: 1px solid $border-primary;
+    padding: 0 $spacing-xl;
+    font-family: $font-main;
+    color: $text-primary;
+    font-size: $font-size-md;
+    font-weight: $font-weight-normal;
+}
+
+// Widget sections
+.widget-left,
+.widget-center,
+.widget-right {
+    padding: 0 $spacing-lg;
+}
+
+// Base widget styling
+.widget {
+    background-color: $bg-secondary;
+    border: 1px solid $border-primary;
+    border-radius: $border-radius;
+    padding: $spacing-xs $spacing-md;
+    margin: 0 2px;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: $bg-hover;
+        border-color: $border-hover;
+    }
+
+    &.active {
+        background-color: $accent-blue;
+        color: $bg-primary;
+        border-color: $accent-blue;
+    }
+}
+
+// Workspaces
+.workspaces {
+    .workspace-btn {
+        background: transparent;
+        border: none;
+        margin: 0 4px;
+        padding: 2px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: $bg-hover;
+            border-radius: 4px;
+        }
+    }
+
+    .workspace-icon {
+        font-size: 16px;
+        color: $border-hover;
+        transition: all 0.2s ease;
+
+        &.active {
+            color: $accent-blue;
+        }
+
+        &.occupied {
+            color: $text-secondary;
+        }
+    }
+}
+
+// Clock
+.clock {
+    font-family: $font-mono;
+    font-weight: $font-weight-bold;
+}
+
+// System info
+.system-info {
+    font-size: $font-size-sm;
+
+    .system-icon {
+        font-family: $font-icon;
+        font-weight: 900; // Font Awesome often needs bold weight
+        font-size: 14px;
+        color: $accent-green;
+
+        &.normal {
+            color: $accent-green;
+        }
+
+        &.warning {
+            color: $accent-yellow;
+        }
+
+        &.error {
+            color: $accent-red;
+        }
+    }
+}
+
+// System info
+.info {
+    font-size: $font-size-sm;
+
+    .system-icon {
+        font-family: $font-icon;
+        font-weight: 900; // Font Awesome often needs bold weight
+        font-size: 14px;
+    }
+}
+
+// Tooltip styling (if using tooltips)
+tooltip {
+    background-color: $bg-secondary;
+    border: 1px solid $border-primary;
+    border-radius: $border-radius;
+    padding: $spacing-xs;
+    color: $text-primary;
+    font-size: $font-size-sm;
+}

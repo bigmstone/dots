@@ -1,0 +1,13 @@
+(defpoll cpu_usage :interval "2s" :initial "0" "top -bn1 | grep 'Cpu(s)' | sed 's/.*, *\\([0-9.]*\\)%* id.*/\\1/' | awk '{print 100 - $1}'")
+(defpoll memory_usage :interval "2s" :initial "0" "free | grep Mem | awk '{printf \"%.1f\", $3/$2 * 100.0}'")
+
+(defwidget system-info [metric value ?warning ?error]
+  (box :class "system-info" :spacing 2
+    (label :class "system-icon ${error == "true" ? "error" : warning == "true" ? "warning" : "normal"}" :text "${metric}")
+    (label :text "${value}%")))
+
+(defwidget cpu []
+    (system-info :metric "" :value cpu_usage :warning "${cpu_usage > 70.0}" :error "${cpu_usage > 90.0}"))
+
+(defwidget memory []
+    (system-info :metric "" :value memory_usage :warning "${memory_usage >70.0}" :error "${memory_usage > 90.0}"))

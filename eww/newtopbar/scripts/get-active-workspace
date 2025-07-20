@@ -1,0 +1,3 @@
+#!/bin/bash
+# ~/.config/eww/scripts/get-active-workspace
+hyprctl activeworkspace -j | jq '.id'

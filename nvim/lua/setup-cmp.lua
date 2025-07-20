@@ -63,8 +63,6 @@ require("cmp_git").setup() ]]--
    matching = { disallow_symbol_nonprefix_matching = false }
  })
 
- -- Set up lspconfig.
- -- local capabilities = require('cmp_nvim_lsp').default_capabilities()
- -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
- --   capabilities = capabilities
- -- }
+ -- Set up lspconfig capabilities for nvim-cmp
+ local capabilities = require('cmp_nvim_lsp').default_capabilities()
+ vim.g.lsp_capabilities = capabilities
