@@ -28,53 +28,17 @@ require('barbecue').setup {
   theme = 'tokyonight-storm',
 }
 
+-- Load minimal LSP configuration
+require('lsp')
+
+-- Simple formatter setup using null-ls
 local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.completion.spell,
         require("none-ls.diagnostics.eslint"),
     },
 })
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-    ensure_installed = { "lua_ls", "pyright", "ruff" },
-})
-
-require('lspconfig').lua_ls.setup {
-    capabilities = vim.g.lsp_capabilities,
-}
-
-require('lspconfig').pyright.setup {
-  capabilities = vim.g.lsp_capabilities,
-  settings = {
-    pyright = {
-      -- Using Ruff's import organizer
-      disableOrganizeImports = true,
-    },
-    python = {
-      analysis = {
-        -- Ignore all files for analysis to exclusively use Ruff for linting
-        ignore = { '*' },
-      },
-    },
-  },
-}
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  buffer = bufnr,
-  callback = function()
-    vim.lsp.buf.code_action({
-      context = { only = { "source.fixAll" }, diagnostics = {} },
-      apply = true,
-    })
-  end,
-})
-
-require('lspconfig').ruff.setup {
-    capabilities = vim.g.lsp_capabilities,
-}
 
 -- Configure rustaceanvim for better Rust experience
 vim.g.rustaceanvim = {

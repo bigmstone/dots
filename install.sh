@@ -291,6 +291,39 @@ setup_python() {
     fi
 }
 
+install_language_servers() {
+    log_info "Installing language servers..."
+    
+    # Python
+    if command_exists pip3; then
+        pip3 install --user pyright ruff || log_warn "Failed to install Python language servers"
+    elif command_exists pip; then
+        pip install --user pyright ruff || log_warn "Failed to install Python language servers"
+    fi
+    
+    # Rust (rust-analyzer comes with rustup)
+    if command_exists rustup; then
+        rustup component add rust-analyzer || log_warn "Failed to install rust-analyzer"
+    fi
+    
+    # Go
+    if command_exists go; then
+        go install golang.org/x/tools/gopls@latest || log_warn "Failed to install gopls"
+    fi
+    
+    # TypeScript/JavaScript
+    if command_exists npm; then
+        npm install -g typescript typescript-language-server || log_warn "Failed to install TypeScript language server"
+    fi
+    
+    # Lua
+    if [[ "$(detect_os)" == "macos" ]]; then
+        brew install lua-language-server || log_warn "Failed to install Lua language server"
+    else
+        log_warn "Please install lua-language-server manually for your distribution"
+    fi
+}
+
 setup_zsh_plugins() {
     log_info "Setting up Zsh plugins..."
     [[ ! -f ~/antigen.zsh ]] && curl -L git.io/antigen > ~/antigen.zsh
@@ -321,6 +354,8 @@ main() {
     install_zsh
     setup_git
     install_rust
+    setup_python
+    install_language_servers
     link_dots
     setup_vim
     setup_zsh_plugins
