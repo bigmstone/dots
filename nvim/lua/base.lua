@@ -1,18 +1,19 @@
-vim.cmd([[
-    set noerrorbells
-    set clipboard=unnamedplus
-    set scrolloff=3
-    set backspace=2
-    set textwidth=80
-    set linebreak
-    set autoindent
-    set smartindent
-    set tabstop=4
-    set shiftwidth=4
-    set softtabstop=4
-    set expandtab
-    autocmd VimEnter * Tagbar
-]])
+vim.opt.errorbells = false
+vim.opt.clipboard = "unnamedplus"
+vim.opt.scrolloff = 3
+vim.opt.backspace = "2"
+vim.opt.textwidth = 0
+vim.opt.linebreak = true
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
+vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    command = "Tagbar"
+})
 
 vim.g.vim_markdown_folding_disabled = 1
 vim.g.table_mode_corner = '|'
@@ -36,6 +37,7 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {
     silent = true,
     noremap = true
 })
+
 
 ---------
 -- MRU --

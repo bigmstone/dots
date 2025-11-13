@@ -24,9 +24,9 @@ local plugins = {
     { 'nvimtools/none-ls.nvim', dependencies = 'nvimtools/none-ls-extras.nvim' },
     {
       'nvim-treesitter/nvim-treesitter',
-      build = function(_)
-        vim.cmd('TSUpdate')
-      end,
+      lazy = false,
+      branch = 'main',
+      build = ':TSUpdate'
     },
     { 'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp' },
 
@@ -34,12 +34,38 @@ local plugins = {
     -- Convience --
     ---------------
     'tpope/vim-fugitive',
-    'hrsh7th/nvim-cmp',
-    { 'hrsh7th/cmp-nvim-lsp', dependencies = 'hrsh7th/nvim-cmp' },
-    { 'hrsh7th/cmp-buffer', dependencies = 'hrsh7th/nvim-cmp' },
-    { 'hrsh7th/nvim-cmp', dependencies = 'hrsh7th/nvim-cmp' },
-    { 'hrsh7th/cmp-cmdline', dependencies = 'hrsh7th/nvim-cmp' },
-    { 'hrsh7th/cmp-path', dependencies = 'hrsh7th/nvim-cmp' },
+    {
+      'saghen/blink.cmp',
+      dependencies = { 'rafamadriz/friendly-snippets' },
+      version = '1.*',
+      opts = {
+        keymap = { preset = 'default' },
+
+        appearance = {
+          nerd_font_variant = 'mono'
+        },
+
+        completion = { documentation = { auto_show = false } },
+
+        sources = {
+          default = { 'lsp', 'path', 'snippets', 'buffer' },
+          -- providers = {
+          --   minuet = {
+          --     name = 'minuet',
+          --     module = 'minuet.blink',
+          --     async = true,
+          --     -- Should match minuet.config.request_timeout * 1000,
+          --     -- since minuet.config.request_timeout is in seconds
+          --     timeout_ms = 3000,
+          --     score_offset = 50, -- Gives minuet higher priority among suggestions
+          --   },
+          -- },
+        },
+
+        fuzzy = { implementation = "prefer_rust_with_warning" }
+      },
+      opts_extend = { "sources.default" }
+    },
     'tpope/vim-commentary',
     'yegappan/mru',
     'lukas-reineke/indent-blankline.nvim',
@@ -154,17 +180,57 @@ local plugins = {
     'Shatur/neovim-ayu',
     { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
     { "utilyre/barbecue.nvim", name = "barbecue", version = "*", dependencies = { "SmiteshP/nvim-navic", "nvim-tree/nvim-web-devicons" } },
+
+    ---------------------------
+    -- AI gon take our jarbs --
+    ---------------------------
+    {
+        'milanglacier/minuet-ai.nvim',
+        config = function()
+            require('minuet').setup {
+                virtualtext = {
+                    auto_trigger_ft = {'*'},
+                    keymap = {
+                        -- accept whole completion
+                        accept = '<A-A>',
+                        -- accept one line
+                        accept_line = '<A-a>',
+                        -- accept n lines (prompts for number)
+                        -- e.g. "A-z 2 CR" will accept 2 lines
+                        accept_n_lines = '<A-z>',
+                        -- Cycle to prev completion item, or manually invoke completion
+                        prev = '<A-[>',
+                        -- Cycle to next completion item, or manually invoke completion
+                        next = '<A-]>',
+                        dismiss = '<A-e>',
+                    },
+                },
+                provider = "claude",
+            }
+        end,
+    },
     {
       "yetone/avante.nvim",
       event = "VeryLazy",
       version = false, -- Never set this value to "*"! Never!
       opts = {
-        -- add any opts here
-        -- for example
+        behaviour = {
+          auto_focus_sidebar = false,
+          auto_approve_tool_permissions = false,
+        },
         providers = {
+          claude = {
+            endpoint = "https://api.anthropic.com",
+            model = "claude-sonnet-4-5",
+            timeout = 30000, -- Timeout in milliseconds
+              extra_request_body = {
+                temperature = 0.75,
+                max_tokens = 20480,
+              },
+          },
           openai = {
             endpoint = "https://api.openai.com/v1",
-            model = "gpt-4o", -- your desired model (or use gpt-4o, etc.)
+            model = "gpt-5-mini", -- your desired model (or use gpt-4o, etc.)
             timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
             extra_request_body = {
               temperature = 0,
@@ -185,7 +251,6 @@ local plugins = {
         --- The below dependencies are optional,
         "echasnovski/mini.pick", -- for file_selector provider mini.pick
         "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-        "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
         "ibhagwan/fzf-lua", -- for file_selector provider fzf
         "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
         "zbirenbaum/copilot.lua", -- for providers='copilot'
@@ -216,15 +281,6 @@ local plugins = {
         },
       },
     },
-    {
-      "greggh/claude-code.nvim",
-      dependencies = {
-        "nvim-lua/plenary.nvim", -- Required for git operations
-      },
-      config = function()
-        require("claude-code").setup()
-      end
-    }
 }
 
 require('lazy').setup(plugins, {})

@@ -99,6 +99,9 @@ install_osx() {
     log_info "Installing fonts..."
     brew tap homebrew/cask-fonts
     brew install --cask font-caskaydia-cove-nerd-font || log_warn "Font installation failed"
+    git clone https://github.com/sayyadirfanali/Myna.git
+    cd Myna
+    cp Myna.otf ~/Library/Fonts/
     
     # Install packages
     log_info "Installing packages from brew.txt..."

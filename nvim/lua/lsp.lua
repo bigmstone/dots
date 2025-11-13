@@ -1,7 +1,3 @@
--- Minimal LSP configuration using lspconfig
-
-local lspconfig = require('lspconfig')
-
 -- Configure diagnostics display
 vim.diagnostic.config({
   virtual_text = true,
@@ -33,11 +29,11 @@ vim.api.nvim_create_autocmd("CursorHold", {
 })
 
 -- Python
-lspconfig.pyright.setup{}
-lspconfig.ruff.setup{}
+vim.lsp.enable('pyright')
+vim.lsp.enable('ruff')
 
 -- Lua
-lspconfig.lua_ls.setup{
+vim.lsp.config('lua_ls', {
   settings = {
     Lua = {
       runtime = { version = 'LuaJIT' },
@@ -47,13 +43,13 @@ lspconfig.lua_ls.setup{
       },
     },
   },
-}
+})
 
 -- Go
-lspconfig.gopls.setup{}
+vim.lsp.enable('gopls')
 
 -- TypeScript/JavaScript  
-lspconfig.ts_ls.setup{}
+vim.lsp.enable('ts_ls')
 
 -- Simple keymaps
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
