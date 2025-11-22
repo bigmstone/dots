@@ -97,17 +97,17 @@ install_osx() {
     
     # Install fonts
     log_info "Installing fonts..."
-    brew tap homebrew/cask-fonts
-    brew install --cask font-caskaydia-cove-nerd-font || log_warn "Font installation failed"
-    git clone https://github.com/sayyadirfanali/Myna.git
-    cd Myna
-    cp Myna.otf ~/Library/Fonts/
+    # brew install --cask font-myna
     
     # Install packages
     log_info "Installing packages from brew.txt..."
     while IFS= read -r package; do
         [[ -z "$package" || "$package" =~ ^# ]] && continue
-        brew install "$package" || log_warn "Failed to install: $package"
+        if brew list "$package" &>/dev/null; then
+            log_info "Already installed: $package"
+        else
+            brew install "$package" || log_warn "Failed to install: $package"
+        fi
     done < /tmp/brew.txt
     
     # Install fzf key bindings
@@ -177,26 +177,21 @@ install_pacman() {
 }
 
 install_zsh() {
-    if [[ -d "${HOME}/.zprezto" ]]; then
-        log_info "Prezto already installed, skipping..."
-        return
+    # Check if zim is already installed (we're using zim now, not prezto)
+    if [[ -f "${HOME}/.zim/zimfw.zsh" ]]; then
+        log_info "Zim already installed, skipping..."
+    else
+        log_info "Zim will be installed on first zsh launch via .zshrc"
     fi
-    
-    log_info "Installing Zsh with Prezto..."
-    git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-    
-    # Link prezto files
-    /usr/bin/env zsh -c 'setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  ln -sf "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done'
-    
+
     # Change shell if not already zsh
     if [[ "$SHELL" != */zsh ]]; then
         log_info "Changing default shell to zsh..."
         if command_exists zsh; then
             chsh -s "$(which zsh)" || log_warn "Failed to change shell, please run: chsh -s $(which zsh)"
         fi
+    else
+        log_info "Default shell is already zsh"
     fi
 }
 
@@ -204,7 +199,7 @@ link_dots() {
     log_info "Linking dotfiles..."
     
     # Create necessary directories
-    mkdir -p ~/.config/{zellij,nvim,kitty,fish/conf.d} ~/.bin
+    mkdir -p ~/.config/{zellij,nvim,kitty,fish/conf.d,jj} ~/.bin
     
     # Link files with proper error handling
     local links=(
@@ -212,6 +207,7 @@ link_dots() {
         "$DOTSDIR/zellij/dev.kbl:~/.config/zellij/dev.kbl"
         "$DOTSDIR/nvim:~/.config/nvim"
         "$DOTSDIR/kitty:~/.config/kitty"
+        "$DOTSDIR/jj/config.toml:~/.config/jj/config.toml"
         "$DOTSDIR/.aliases:~/.aliases"
         "$DOTSDIR/.aliases.fish:~/.aliases.fish"
         "$DOTSDIR/exports.fish:~/.config/fish/conf.d/exports.fish"
@@ -219,19 +215,27 @@ link_dots() {
         "$DOTSDIR/.vimrc:~/.vimrc"
         "$DOTSDIR/.zshrc:~/.zshrc"
         "$DOTSDIR/.zpreztorc:~/.zpreztorc"
+        "$DOTSDIR/zsh:~/.zsh"
     )
     
     for link in "${links[@]}"; do
         src="${link%:*}"
         dst="${link#*:}"
         dst="${dst/#\~/$HOME}"  # Expand tilde
-        
-        # Remove existing link/file if it exists
-        if [[ -e "$dst" || -L "$dst" ]]; then
-            rm -rf "$dst"
+
+        # Check if already correctly linked
+        if [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "$src" ]]; then
+            log_info "Already linked: $dst"
+            continue
         fi
-        
-        ln -sf "$src" "$dst" && log_info "Linked: $dst"
+
+        # Handle existing file/directory that's not our symlink
+        if [[ -e "$dst" || -L "$dst" ]]; then
+            log_warn "Backing up existing: $dst -> ${dst}.backup"
+            mv "$dst" "${dst}.backup"
+        fi
+
+        ln -s "$src" "$dst" && log_info "Linked: $dst"
     done
     
     # Create prienv if it doesn't exist
@@ -249,13 +253,19 @@ setup_vim() {
 
 setup_kitty() {
     local os=$(detect_os)
-    
+
     if [[ "$os" == "macos" ]]; then
-        log_info "Installing Kitty..."
-        brew install --cask kitty || log_warn "Failed to install Kitty"
+        if command_exists kitty; then
+            log_info "Kitty already installed"
+        else
+            log_info "Installing Kitty..."
+            brew install --cask kitty || log_warn "Failed to install Kitty"
+        fi
     fi
-    
-    if [[ ! -d ~/.config/kitty/kitty-themes ]]; then
+
+    if [[ -d ~/.config/kitty/kitty-themes ]]; then
+        log_info "Kitty themes already installed"
+    else
         log_info "Installing Kitty themes..."
         git clone --depth 1 https://github.com/dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
     fi
@@ -285,42 +295,54 @@ setup_git() {
 }
 
 setup_python() {
-    if command_exists pyenv; then
-        log_info "Setting up Python with pyenv..."
-        pyenv install 3 || log_warn "Failed to install Python 3"
-        pyenv global 3
+    if command_exists uv; then
+        log_info "Python setup via uv..."
+        log_info "Use 'uv python install' to install Python versions"
+        log_info "Use 'uv python pin' to set project-specific versions"
     else
-        log_warn "pyenv not found, skipping Python setup"
+        log_warn "uv not found, skipping Python setup"
     fi
 }
 
 install_language_servers() {
     log_info "Installing language servers..."
-    
+
     # Python
-    if command_exists pip3; then
+    if command_exists pyright && command_exists ruff; then
+        log_info "Python language servers already installed"
+    elif command_exists pip3; then
         pip3 install --user pyright ruff || log_warn "Failed to install Python language servers"
     elif command_exists pip; then
         pip install --user pyright ruff || log_warn "Failed to install Python language servers"
     fi
-    
+
     # Rust (rust-analyzer comes with rustup)
     if command_exists rustup; then
-        rustup component add rust-analyzer || log_warn "Failed to install rust-analyzer"
+        if rustup component list | grep -q "rust-analyzer.*installed"; then
+            log_info "rust-analyzer already installed"
+        else
+            rustup component add rust-analyzer || log_warn "Failed to install rust-analyzer"
+        fi
     fi
-    
+
     # Go
-    if command_exists go; then
+    if command_exists gopls; then
+        log_info "gopls already installed"
+    elif command_exists go; then
         go install golang.org/x/tools/gopls@latest || log_warn "Failed to install gopls"
     fi
-    
+
     # TypeScript/JavaScript
-    if command_exists npm; then
+    if command_exists typescript-language-server; then
+        log_info "TypeScript language server already installed"
+    elif command_exists npm; then
         npm install -g typescript typescript-language-server || log_warn "Failed to install TypeScript language server"
     fi
-    
+
     # Lua
-    if [[ "$(detect_os)" == "macos" ]]; then
+    if command_exists lua-language-server; then
+        log_info "Lua language server already installed"
+    elif [[ "$(detect_os)" == "macos" ]]; then
         brew install lua-language-server || log_warn "Failed to install Lua language server"
     else
         log_warn "Please install lua-language-server manually for your distribution"
@@ -328,8 +350,15 @@ install_language_servers() {
 }
 
 setup_zsh_plugins() {
-    log_info "Setting up Zsh plugins..."
-    [[ ! -f ~/antigen.zsh ]] && curl -L git.io/antigen > ~/antigen.zsh
+    log_info "Setting up Zsh plugins with zap..."
+
+    # Install zap if not already installed
+    if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zap" ]]; then
+        log_info "Installing zap..."
+        zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
+    else
+        log_info "Zap already installed"
+    fi
 }
 
 # Main installation flow

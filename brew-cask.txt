@@ -1,6 +1,14 @@
+arduino-ide
 bartender
 fantastical
 font-0xproto-nerd-font
 font-caskaydia-cove-nerd-font
 ftdi-vcp-driver
+google-chrome
+kicad
 kitty
+sigmaos
+wireshark
+wireshark-app
+zen
+zoom

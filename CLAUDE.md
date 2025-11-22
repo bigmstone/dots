@@ -16,7 +16,7 @@ This is a personal dotfiles repository for configuring development environments 
 # The install script will:
 # - Install Homebrew (if on macOS)
 # - Install packages from brew.txt
-# - Set up Rust, Python (via pyenv), and Go environments
+# - Set up Rust, Python (via uv), and Go environments
 # - Create symbolic links for all configuration files
 # - Configure git, shells, and editors
 ```
