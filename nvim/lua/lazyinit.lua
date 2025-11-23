@@ -174,11 +174,14 @@ local plugins = {
     ----------------
     -- Appearance --
     ----------------
+    -- Colors First
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+    -- { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
+    -- Rest of the appearance stuff
     'majutsushi/tagbar',
     'nvim-lualine/lualine.nvim',
     'rrethy/vim-illuminate',
     'Shatur/neovim-ayu',
-    { "folke/tokyonight.nvim", lazy = false, priority = 1000, opts = {} },
     { "utilyre/barbecue.nvim", name = "barbecue", version = "*", dependencies = { "SmiteshP/nvim-navic", "nvim-tree/nvim-web-devicons" } },
 
     ---------------------------
