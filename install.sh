@@ -214,7 +214,7 @@ link_dots() {
         "$DOTSDIR/.tmux.conf:~/.tmux.conf"
         "$DOTSDIR/.vimrc:~/.vimrc"
         "$DOTSDIR/.zshrc:~/.zshrc"
-        "$DOTSDIR/.zpreztorc:~/.zpreztorc"
+        "$DOTSDIR/.zimrc:~/.zimrc"
         "$DOTSDIR/zsh:~/.zsh"
     )
     
@@ -349,17 +349,6 @@ install_language_servers() {
     fi
 }
 
-setup_zsh_plugins() {
-    log_info "Setting up Zsh plugins with zap..."
-
-    # Install zap if not already installed
-    if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zap" ]]; then
-        log_info "Installing zap..."
-        zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
-    else
-        log_info "Zap already installed"
-    fi
-}
 
 # Main installation flow
 main() {
@@ -390,10 +379,10 @@ main() {
     install_language_servers
     link_dots
     setup_vim
-    setup_zsh_plugins
-    
+
     log_info "Installation complete!"
     log_info "Please restart your terminal or run: source ~/.zshrc"
+    log_info "Zim will auto-install plugins on first zsh launch"
 }
 
 # Run main function

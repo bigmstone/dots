@@ -1,6 +1,6 @@
-# Prompt configuration
+# # Prompt configuration
 
-autoload -Uz promptinit
-promptinit
-# prompt paradox
-prompt steeef
+# autoload -Uz promptinit
+# promptinit
+# # prompt paradox
+# prompt steeef
