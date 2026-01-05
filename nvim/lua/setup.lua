@@ -24,11 +24,9 @@ require("nvim-tree").setup({
         },
     },
 })
-require('lualine').setup({ options = { theme = 'tokyonight-storm' } })
+require('lualine').setup({})
 require('illuminate').configure({})
-require('barbecue').setup {
-  theme = 'tokyonight-storm',
-}
+require('barbecue').setup({})
 
 -- Load minimal LSP configuration
 require('lsp')
@@ -117,6 +115,9 @@ wk.add({
   }
 })
 
-require'nvim-treesitter'.setup {
-    ensure_installed = 'all'
-}
+require'nvim-treesitter'.install { 'all' }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'svelte' },
+  callback = function() vim.treesitter.start() end,
+})

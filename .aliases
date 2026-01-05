@@ -63,52 +63,52 @@ ssh-remote-add () { cat ~/.ssh/id_ed25519.pub  | ssh "$@" 'cat > .tmp.pubkey; mk
 
 alias catmd="pandoc -f markdown -t plain"
 
-workdev () {
-    if [ -z "$@" ]; then
-        echo "Include a dev directory"
-        return
-    else
-        dir="$DEV/$1";
-        session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
-
-
-        if tmux has-session -t $session_name 2>/dev/null; then
-            echo "Session exists"
-        else
-            tmux new-session -d -s $session_name -c "$dir"
-            tmux rename-window "Dev"
-            tmux new-window -n "Test" -c "$dir"
-            tmux split-window -v -c "$dir"
-            tmux select-window -n
-        fi
-
-        tmux attach -t $session_name
-    fi
-}
-
 # workdev () {
 #     if [ -z "$@" ]; then
 #         echo "Include a dev directory"
 #         return
 #     else
-#         dir="$DEV/$1"
+#         dir="$DEV/$1";
 #         session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
 
-#         sessions=$(zellij list-sessions -s)
-#         for session (${(f)sessions}); do
-#           if [[ $session == $session_name ]]; then
-#               zellij attach $session_name
-#               return 0
-#           fi
-#         done
 
-#         template="$HOME/.config/zellij/dev.kbl"
+#         if tmux has-session -t $session_name 2>/dev/null; then
+#             echo "Session exists"
+#         else
+#             tmux new-session -d -s $session_name -c "$dir"
+#             tmux rename-window "Dev"
+#             tmux new-window -n "Test" -c "$dir"
+#             tmux split-window -v -c "$dir"
+#             tmux select-window -n
+#         fi
 
-#         # cd $dir
-#         # zellij -s "$session_name" -n $template
-#         zellij options --default-cwd $dir --session-name $session_name --default-layout $template
+#         tmux attach -t $session_name
 #     fi
 # }
+
+workdev () {
+    if [ -z "$@" ]; then
+        echo "Include a dev directory"
+        return
+    else
+        dir="$DEV/$1"
+        session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+
+        sessions=$(zellij list-sessions -s)
+        for session (${(f)sessions}); do
+          if [[ $session == $session_name ]]; then
+              zellij attach $session_name
+              return 0
+          fi
+        done
+
+        template="$HOME/.config/zellij/dev.kbl"
+
+        # cd $dir
+        # zellij -s "$session_name" -n $template
+        zellij options --default-cwd $dir --session-name $session_name --default-layout $template
+    fi
+}
 
 
 
