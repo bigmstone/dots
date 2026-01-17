@@ -34,3 +34,6 @@ source "${ZSH_CONFIG_DIR}/functions.zsh"
 [[ -f "$HOME/.prienv" ]] && source "$HOME/.prienv"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# opencode
+export PATH=/Users/mstone/.opencode/bin:$PATH
