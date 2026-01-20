@@ -51,12 +51,9 @@ ndev () {
 }
 
 gic () {
-    echo "Making dev directory: $2";
-    mkdev $2;
-    git init;
-    git remote add origin $1;
-    git fetch;
-    git checkout -t origin/master || git checkout -t origin/main
+    git -C $DEV clone $1
+    local repo_name=$(basename $1 .git)
+    workdev $repo_name
 }
 
 ssh-remote-add () { cat ~/.ssh/id_ed25519.pub  | ssh "$@" 'cat > .tmp.pubkey; mkdir -p ~/.ssh; touch ~/.ssh/authorized_keys; cat .tmp.pubkey >> ~/.ssh/authorized_keys; rm .tmp.pubkey' }
