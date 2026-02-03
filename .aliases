@@ -85,8 +85,18 @@ alias catmd="pandoc -f markdown -t plain"
 
 workdev () {
     if [ -z "$@" ]; then
-        echo "Include a dev directory"
-        return
+        # No arguments - attach to any existing session
+        sessions=$(zellij list-sessions -s 2>/dev/null)
+        if [ -n "$sessions" ]; then
+            # Get the first session and attach
+            first_session=$(echo "$sessions" | head -n 1)
+            echo "Attaching to session: $first_session"
+            zellij attach "$first_session"
+            return 0
+        else
+            echo "No active Zellij sessions found"
+            return 1
+        fi
     fi
     
     # Determine path type and resolve to absolute path
