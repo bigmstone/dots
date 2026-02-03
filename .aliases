@@ -87,24 +87,79 @@ workdev () {
     if [ -z "$@" ]; then
         echo "Include a dev directory"
         return
-    else
-        dir="$DEV/$1"
-        session_name="$(echo $1 | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
-
-        sessions=$(zellij list-sessions -s)
-        for session (${(f)sessions}); do
-          if [[ $session == $session_name ]]; then
-              zellij attach $session_name
-              return 0
-          fi
-        done
-
-        template="$HOME/.config/zellij/dev.kbl"
-
-        # cd $dir
-        # zellij -s "$session_name" -n $template
-        zellij options --default-cwd $dir --session-name $session_name --default-layout $template
     fi
+    
+    # Determine path type and resolve to absolute path
+    local is_dev_subdir=false
+    local dir
+    
+    if [[ "$1" == /* ]] || [[ "$1" == ~* ]]; then
+        # Absolute path - expand tilde if present
+        dir="${1/#\~/$HOME}"
+        is_dev_subdir=false
+    elif [[ "$1" == ./* ]] || [[ "$1" == ../* ]] || [[ "$1" == *../* ]] || [[ "$1" == *./* ]]; then
+        # Relative path - resolve to absolute path
+        dir="$(cd "$(dirname "$1")" 2>/dev/null && pwd)/$(basename "$1")"
+        if [ -z "$dir" ] || [ "$dir" == "/" ]; then
+            dir="$1"  # Fallback if resolution fails
+        fi
+        is_dev_subdir=false
+    else
+        # Simple directory name - prepend $DEV
+        dir="$DEV/$1"
+        is_dev_subdir=true
+    fi
+    
+    # Check if directory exists
+    if [ ! -d "$dir" ]; then
+        if [ "$is_dev_subdir" = true ]; then
+            # Offer to create if it's in dev directory
+            echo "Directory $dir does not exist. Create it? (y/N)"
+            read -k1 response
+            echo
+            if [[ $response =~ ^[Yy]$ ]]; then
+                mkdir -p "$dir"
+                echo "Created $dir"
+            else
+                echo "Cancelled"
+                return 1
+            fi
+        else
+            # Error out if it's outside dev directory
+            echo "Error: Directory $dir does not exist"
+            return 1
+        fi
+    fi
+    
+    # Generate session name based on path type
+    local session_name
+    if [ "$is_dev_subdir" = true ]; then
+        # Inside dev directory - use base name only (original behavior)
+        session_name="$(echo "$1" | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+    else
+        # Outside dev directory - use parent-base format
+        local parent="$(echo "$dir" | rev | cut -d'/' -f 2 | rev | sed 's/\.//g')"
+        local base="$(echo "$dir" | rev | cut -d'/' -f 1 | rev | sed 's/\.//g')"
+        
+        if [ -n "$parent" ] && [ "$parent" != "/" ] && [ "$parent" != "" ]; then
+            session_name="${parent}-${base}"
+        else
+            session_name="$base"
+        fi
+    fi
+    
+    # Check for existing Zellij session
+    sessions=$(zellij list-sessions -s)
+    for session (${(f)sessions}); do
+        if [[ $session == $session_name ]]; then
+            zellij attach $session_name
+            return 0
+        fi
+    done
+    
+    # Create new Zellij session
+    template="$HOME/.config/zellij/dev.kbl"
+    zellij options --default-cwd $dir --session-name $session_name --default-layout $template
 }
 
 
