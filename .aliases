@@ -173,9 +173,11 @@ workdev () {
 }
 
 
+OBSIDIAN_DIR=$HOME/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Main
+
 
 obsi () {
-    workdev ~/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents/Main
+    workdev "$OBSIDIAN_DIR"
 }
 
 compdef "_files -W $DEV" workdev
@@ -467,4 +469,26 @@ pingssh() {
 
   echo "Waiting for $host..."
   ping -o -t "$timeout" "$host" >/dev/null 2>&1 && ssh "$host"
+}
+
+alias viw='NVIM_APPNAME=nvim-write nvim'
+
+function vi-daily() {
+  local date_str
+  date_str=$(date +"%Y_%m_%d")
+
+  local writing_dir="${OBSIDIAN_DIR}/Writing"
+  local nn=0
+  local filepath
+
+  while true; do
+    filepath="${writing_dir}/${date_str}_$(printf '%02d' $nn).md"
+    if [[ ! -f "$filepath" ]]; then
+      break
+    fi
+    (( nn++ ))
+  done
+
+  mkdir -p "$writing_dir"
+  viw "$filepath"
 }

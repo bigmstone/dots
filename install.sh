@@ -206,6 +206,7 @@ link_dots() {
         "$DOTSDIR/zellij/config.kbl:~/.config/zellij/config.kbl"
         "$DOTSDIR/zellij/dev.kbl:~/.config/zellij/dev.kbl"
         "$DOTSDIR/nvim:~/.config/nvim"
+        "$DOTSDIR/nvim-write:~/.config/nvim-write"
         "$DOTSDIR/kitty:~/.config/kitty"
         "$DOTSDIR/jj/config.toml:~/.config/jj/config.toml"
         "$DOTSDIR/.aliases:~/.aliases"
