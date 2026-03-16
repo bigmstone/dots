@@ -32,3 +32,7 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/dev/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
+# Obsidian (macOS only)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+fi
