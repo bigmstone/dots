@@ -199,7 +199,7 @@ link_dots() {
     log_info "Linking dotfiles..."
     
     # Create necessary directories
-    mkdir -p ~/.config/{zellij,nvim,kitty,fish/conf.d,jj} ~/.bin
+    mkdir -p ~/.config/{zellij,nvim,kitty,ghostty,fish/conf.d,jj} ~/.bin
     
     # Link files with proper error handling
     local links=(
@@ -208,6 +208,7 @@ link_dots() {
         "$DOTSDIR/nvim:~/.config/nvim"
         "$DOTSDIR/nvim-write:~/.config/nvim-write"
         "$DOTSDIR/kitty:~/.config/kitty"
+        "$DOTSDIR/ghostty:~/.config/ghostty"
         "$DOTSDIR/jj/config.toml:~/.config/jj/config.toml"
         "$DOTSDIR/.aliases:~/.aliases"
         "$DOTSDIR/.aliases.fish:~/.aliases.fish"

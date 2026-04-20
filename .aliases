@@ -239,18 +239,8 @@ synk () {
 alias t='$DEV/todo.txt-cli/todo.sh'
 
 genpw() {
-  local len=${1:-16}
-  if ! [[ $len =~ ^[0-9]+$ ]] || (( len < 1 )); then
-    printf 'Usage: genpw [length]\n' >&2
-    return 1
-  fi
-
-  # Estimate bytes so base64 output is long enough after filtering:
-  # need ~ceil(len * 3/4) bytes; add slack of +4 bytes
-  local bytes=$(( (len * 3 + 3) / 4 + 4 ))
-
-  openssl rand -base64 "$bytes" | tr -dc 'A-Za-z0-9!@#$%&*()-_=+' | head -c "$len"
-  echo
+  local length=${1:-20}
+  LC_ALL=C tr -dc 'A-Za-z0-9!@#$%^&*()_+-=' < /dev/urandom | head -c "$length"; echo
 }
 
 today () {
