@@ -168,7 +168,7 @@ workdev () {
     done
     
     # Create new Zellij session
-    template="$HOME/.config/zellij/dev.kbl"
+    template="$HOME/.config/zellij/dev.kdl"
     zellij options --default-cwd $dir --session-name $session_name --default-layout $template
 }
 
